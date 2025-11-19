@@ -20,7 +20,7 @@
 
 ## 🔧 التثبيت
 
-1. استخدم الرابط: `https://[اسمك].github.io/debt-qat-management-system`
+1. استخدم الرابط: `https://abdulqddus.github.io/debt-qat-management-system`
 2. أو حمّل التطبيق عبر AppsGeyser
 
 ## 📄 الرخصة
