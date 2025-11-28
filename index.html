@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <title>🚀 نظام إدارة الديون والقات المتقدم - الإصدار المدمج</title>
+    
+    <!-- إضافة Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
+    
+    <!-- إضافة مكتبات التصدير -->
+    <script src="https://cdn.jsdelivr.net/npm/exceljs/dist/exceljs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+    
+    <!-- إضافة أيقونات -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- إضافة خطوط -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- رابط ملف CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- صفحة تسجيل الدخول -->
+<div id="loginPage">
+    <div id="loginCard">
+        <div style="margin-bottom: 24px;">
+            <i class="fas fa-chart-line" style="font-size: 48px; color: var(--primary); margin-bottom: 16px;"></i>
+            <h2>🚀 نظام إدارة الديون والقات المتقدم</h2>
+            <p style="color: var(--muted); margin-top: 8px;">إدارة ذكية وسريعة لديونك وأعمالك</p>
+        </div>
+        
+        <input id="loginName" type="text" placeholder="👤 اسم المستخدم" />
+        <input id="loginPassword" type="password" placeholder="🔒 كلمة المرور" />
+        
+        <div class="login-options">
+            <button id="btnLogin" class="primary">
+                <i class="fas fa-sign-in-alt"></i>
+                تسجيل الدخول
+            </button>
+            <button id="btnRegister" class="success">
+                <i class="fas fa-user-plus"></i>
+                إنشاء حساب
+            </button>
+        </div>
+
+        <!-- إضافة زر تسجيل الدخول بحساب Google من الكود الأول -->
+        <div style="display: flex; align-items: center; margin: 20px 0; color: var(--muted);">
+            <div style="flex: 1; height: 1px; background: rgba(255,255,255,0.2);"></div>
+            <div style="padding: 0 15px; font-size: 14px;">أو</div>
+            <div style="flex: 1; height: 1px; background: rgba(255,255,255,0.2);"></div>
+        </div>
+
+        <button id="googleSignInBtn" class="ghost" style="width: 100%; border-color: #db4437; color: #db4437;">
+            <i class="fab fa-google" style="color: #db4437;"></i>
+            تسجيل الدخول بحساب Google
+        </button>
+        
+        <p id="loginMessage" style="color: var(--muted); font-size: 14px; margin-top: 16px;"></p>
+        
+        <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.1);">
+            <p style="color: var(--muted); font-size: 12px;">
+                <i class="fas fa-shield-alt"></i>
+                بياناتك محمية ومؤمنة بالكامل
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- صفحة التطبيق الرئيسية -->
+<div id="appPage" class="hidden">
+    <!-- شريط التنقل المحسن -->
+    <div class="nav-container" id="navContainer">
+        <div class="nav-header">
+            <div class="nav-title">
+                <i class="fas fa-chart-line"></i>
+                <div class="nav-title-text">
+                    <h1>نظام إدارة الديون والقات</h1>
+                    <p id="welcomeText">مرحباً بك</p>
+                </div>
+            </div>
+            
+            <div class="nav-controls">
+                <div id="currentDateTime"></div>
+                <button id="logoutBtn" class="danger small">
+                    <i class="fas fa-sign-out-alt"></i>
+                    خروج
+                </button>
+            </div>
+        </div>
+
+        <div class="nav-buttons">
+            <button id="navDashboard" class="warning">
+                <i class="fas fa-tachometer-alt"></i>
+                لوحة التحكم
+            </button>
+            <button id="navDebts" class="primary">
+                <i class="fas fa-hand-holding-usd"></i>
+                الديون
+            </button>
+            <button id="navQat" class="success">
+                <i class="fas fa-leaf"></i>
+                القات
+            </button>
+            <button id="navSummary" class="info">
+                <i class="fas fa-chart-pie"></i>
+                الملخص
+            </button>
+            <button id="navSettings" class="ghost">
+                <i class="fas fa-cog"></i>
+                الإعدادات
+            </button>
+        </div>
+    </div>
+
+    <!-- صفحة لوحة التحكم -->
+    <div id="dashboardPage" class="page">
+        <div class="card">
+            <h2><i class="fas fa-tachometer-alt"></i> لوحة التحكم الرئيسية</h2>
+            <p style="color: var(--muted); margin-bottom: 24px;">نظرة شاملة على أداء أعمالك</p>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value" id="dashboardTotalDebts">0</div>
+                    <div class="stat-label">إجمالي الديون</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="dashboardTotalPaid">0</div>
+                    <div class="stat-label">المسدد</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="dashboardTotalRemaining">0</div>
+                    <div class="stat-label">المتبقي</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="dashboardTotalQat">0</div>
+                    <div class="stat-label">إجمالي القات</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quick-actions">
+            <div class="quick-action-btn" id="quickAddDebt">
+                <i class="fas fa-plus-circle"></i>
+                <div>إضافة دين</div>
+            </div>
+            <div class="quick-action-btn" id="quickAddPayment">
+                <i class="fas fa-money-bill-wave"></i>
+                <div>تسديد دفعة</div>
+            </div>
+            <div class="quick-action-btn" id="quickAddQat">
+                <i class="fas fa-leaf"></i>
+                <div>تسجيل قات</div>
+            </div>
+            <div class="quick-action-btn" id="quickExport">
+                <i class="fas fa-file-export"></i>
+                <div>تصدير تقرير</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3><i class="fas fa-chart-line"></i> الديون الأخيرة</h3>
+            <div id="recentDebts"></div>
+        </div>
+
+        <div class="card">
+            <h3><i class="fas fa-history"></i> آخر التسديدات</h3>
+            <div id="recentPayments"></div>
+        </div>
+    </div>
+
+    <!-- صفحة الديون -->
+    <div id="debtsPage" class="page">
+        <div class="search-container">
+            <input type="text" id="searchDebts" placeholder="🔍 ابحث بالاسم أو التاريخ... ثم اضغط Enter للسجل التفصيلي" />
+            <button id="quickSearchBtn" class="small primary search-btn">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+
+        <div class="summary-cards">
+            <div class="summary-card total">
+                <h3><i class="fas fa-hand-holding-usd"></i> إجمالي الديون</h3>
+                <p id="totalDebts">0 ريال</p>
+            </div>
+            <div class="summary-card paid">
+                <h3><i class="fas fa-check-circle"></i> المسدد</h3>
+                <p id="totalPaid">0 ريال</p>
+            </div>
+            <div class="summary-card remaining">
+                <h3><i class="fas fa-clock"></i> المتبقي</h3>
+                <p id="totalRemaining">0 ريال</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3><i class="fas fa-plus-circle"></i> تسجيل / تعديل الدين</h3>
+            <input id="debtName" type="text" placeholder="👤 اسم المتدين" />
+            <input id="debtAmount" type="number" placeholder="💰 المبلغ الإجمالي" />
+            
+            <div class="date-selection">
+                <input id="debtDate" type="date" />
+                <div class="day-selector" id="daySelectorDebt">
+                    <button type="button" id="showDaysDebt" class="small ghost">
+                        <i class="fas fa-calendar-alt"></i>
+                        اختر اليوم
+                    </button>
+                    <div class="days-dropdown" id="daysDropdownDebt"></div>
+                </div>
+                <button id="setTodayDebt" class="small ghost">
+                    <i class="fas fa-calendar-day"></i>
+                    اليوم
+                </button>
+                <button id="setYesterdayDebt" class="small ghost">
+                    <i class="fas fa-calendar-minus"></i>
+                    أمس
+                </button>
+            </div>
+            
+            <select id="debtTime">
+                <option value="صباحاً">🌅 صباحاً</option>
+                <option value="مساءً">🌙 مساءً</option>
+            </select>
+            
+            <div style="display: flex; gap: 12px; margin-top: 16px;">
+                <button id="saveDebt" class="primary" style="flex: 2;">
+                    <i class="fas fa-save"></i>
+                    حفظ الدين
+                </button>
+                <button id="clearDebt" class="ghost" style="flex: 1;">
+                    <i class="fas fa-broom"></i>
+                    تفريغ
+                </button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3><i class="fas fa-money-bill-wave"></i> تسديد دفعة</h3>
+            <select id="debtorSelect">
+                <option value="">👤 اختر المتدين</option>
+            </select>
+            <input id="paymentAmount" type="number" placeholder="💰 مبلغ التسديد" />
+            
+            <div class="date-selection">
+                <input id="paymentDate" type="date" />
+                <div class="day-selector" id="daySelectorPayment">
+                    <button type="button" id="showDaysPayment" class="small ghost">
+                        <i class="fas fa-calendar-alt"></i>
+                        اختر اليوم
+                    </button>
+                    <div class="days-dropdown" id="daysDropdownPayment"></div>
+                </div>
+                <button id="setTodayPayment" class="small ghost">
+                    <i class="fas fa-calendar-day"></i>
+                    اليوم
+                </button>
+                <button id="setYesterdayPayment" class="small ghost">
+                    <i class="fas fa-calendar-minus"></i>
+                    أمس
+                </button>
+            </div>
+            
+            <button id="savePayment" class="success">
+                <i class="fas fa-check-circle"></i>
+                تسجيل التسديد
+            </button>
+        </div>
+
+        <div class="card">
+            <h3><i class="fas fa-list"></i> قائمة الديون</h3>
+            <div id="debtsList"></div>
+        </div>
+
+        <!-- قسم سجل الدين التفصيلي -->
+        <div class="card debt-history hidden" id="debtHistoryCard">
+            <h3><i class="fas fa-history"></i> سجل الدين التفصيلي</h3>
+            <div class="export-buttons">
+                <button id="exportExcel" class="primary">
+                    <i class="fas fa-file-excel"></i>
+                    تصدير Excel
+                </button>
+                <button id="exportWord" class="success">
+                    <i class="fas fa-file-word"></i>
+                    تصدير Word
+                </button>
+            </div>
+            <div id="debtHistoryList"></div>
+        </div>
+    </div>
+
+    <!-- صفحة القات -->
+    <div id="qatPage" class="page">
+        <div class="search-container">
+            <input type="text" id="searchQat" placeholder="🔍 ابحث في القات..." />
+        </div>
+
+        <div class="card">
+            <h3><i class="fas fa-leaf"></i> تسجيل القات اليومي</h3>
+            <input id="qatType" type="text" placeholder="🌿 نوع القات" />
+            <input id="qatCountInput" type="number" placeholder="🔢 العدد" />
+            
+            <div class="date-selection">
+                <input id="qatDate" type="date" />
+                <div class="day-selector" id="daySelectorQat">
+                    <button type="button" id="showDaysQat" class="small ghost">
+                        <i class="fas fa-calendar-alt"></i>
+                        اختر اليوم
+                    </button>
+                    <div class="days-dropdown" id="daysDropdownQat"></div>
+                </div>
+                <button id="setTodayQat" class="small ghost">
+                    <i class="fas fa-calendar-day"></i>
+                    اليوم
+                </button>
+                <button id="setYesterdayQat" class="small ghost">
+                    <i class="fas fa-calendar-minus"></i>
+                    أمس
+                </button>
+            </div>
+            
+            <div style="display: flex; gap: 12px; margin-top: 16px;">
+                <button id="saveQat" class="primary" style="flex: 2;">
+                    <i class="fas fa-save"></i>
+                    حفظ
+                </button>
+                <button id="clearQat" class="ghost" style="flex: 1;">
+                    <i class="fas fa-broom"></i>
+                    تفريغ
+                </button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3><i class="fas fa-history"></i> سجل القات</h3>
+            <div id="qatList"></div>
+        </div>
+    </div>
+
+    <!-- صفحة الملخص -->
+    <div id="summaryPage" class="page">
+        <div class="card">
+            <h3><i class="fas fa-chart-pie"></i> ملخص الديون التفصيلي</h3>
+            <div class="export-buttons">
+                <button id="exportSummaryExcel" class="primary">
+                    <i class="fas fa-file-excel"></i>
+                    تصدير Excel
+                </button>
+                <button id="exportSummaryWord" class="success">
+                    <i class="fas fa-file-word"></i>
+                    تصدير Word
+                </button>
+            </div>
+            <div id="debtsSummary"></div>
+        </div>
+    </div>
+
+    <!-- صفحة الإعدادات -->
+    <div id="settingsPage" class="page">
+        <div class="card">
+            <h3><i class="fas fa-cog"></i> الإعدادات والإدارة</h3>
+            
+            <div class="management-buttons">
+                <button id="changePassword" class="warning">
+                    <i class="fas fa-key"></i>
+                    تغيير كلمة المرور
+                </button>
+                <button id="deleteData" class="danger">
+                    <i class="fas fa-trash"></i>
+                    حذف جميع البيانات
+                </button>
+                <button id="exportAllData" class="primary">
+                    <i class="fas fa-download"></i>
+                    نسخ احتياطي
+                </button>
+                <button id="importData" class="success">
+                    <i class="fas fa-upload"></i>
+                    استعادة البيانات
+                </button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3><i class="fas fa-chart-bar"></i> إحصائيات النظام</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value" id="statsTotalDebts">0</div>
+                    <div class="stat-label">إجمالي الديون</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="statsTotalRecords">0</div>
+                    <div class="stat-label">إجمالي السجلات</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="statsActiveDebts">0</div>
+                    <div class="stat-label">الديون النشطة</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="statsQatRecords">0</div>
+                    <div class="stat-label">سجلات القات</div>
+                </div>
+            </div>
+            <div id="backupStatus" style="font-size: 10px; color: var(--muted); margin-top: 5px; text-align: center;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- حالة المزامنة -->
+<div id="syncStatus" class="sync-status hidden">
+    <span id="syncIcon">↻</span>
+    <span id="syncText">جارِ المزامنة...</span>
+</div>
+
+<!-- نافذة تغيير كلمة المرور -->
+<div id="changePasswordModal" class="modal hidden">
+    <div class="modal-content">
+        <h3 style="margin-bottom:24px;display:flex;align-items:center;gap:12px;">
+            <i class="fas fa-key"></i>
+            تغيير كلمة المرور
+        </h3>
+        
+        <input type="password" id="currentPassword" placeholder="🔒 كلمة المرور الحالية" />
+        <input type="password" id="newPassword" placeholder="🔑 كلمة المرور الجديدة" />
+        <input type="password" id="confirmPassword" placeholder="✅ تأكيد كلمة المرور" />
+        
+        <div style="display:flex;gap:12px;margin-top:24px;">
+            <button id="saveNewPassword" class="primary" style="flex:2;">حفظ</button>
+            <button id="cancelChangePassword" class="ghost" style="flex:1;">إلغاء</button>
+        </div>
+    </div>
+</div>
+
+<!-- رابط ملف JavaScript -->
+<script src="script.js"></script>
+</body>
+</html>
