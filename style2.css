@@ -1,0 +1,1159 @@
+:root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --card-hover: #334155;
+    --primary: #3b82f6;
+    --primary-dark: #2563eb;
+    --accent: #8b5cf6;
+    --success: #10b981;
+    --success-dark: #059669;
+    --muted: #94a3b8;
+    --danger: #ef4444;
+    --danger-dark: #dc2626;
+    --warning: #f59e0b;
+    --warning-dark: #d97706;
+    --info: #06b6d4;
+    --radius: 16px;
+    --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: 'Tajawal', system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, "Noto Kufi Arabic", "Noto Sans Arabic", sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    background: linear-gradient(135deg, var(--bg) 0%, #1e1b4b 100%);
+    color: #fff;
+    overflow-x: hidden;
+}
+
+body {
+    padding: 0;
+    background-attachment: fixed;
+}
+
+h1, h2, h3, h4 {
+    margin: 0;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+input, select, button, textarea {
+    border-radius: var(--radius);
+    border: none;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-family: inherit;
+    transition: var(--transition);
+}
+
+input, select, textarea {
+    width: 100%;
+    margin-bottom: 12px;
+    background: #2d3748;
+    color: #fff;
+    border: 2px solid #4a5568;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: #374151;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+button {
+    cursor: pointer;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+button:hover::before {
+    left: 100%;
+}
+
+button.primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #fff;
+}
+
+button.success {
+    background: linear-gradient(135deg, var(--success), var(--success-dark));
+    color: #fff;
+}
+
+button.danger {
+    background: linear-gradient(135deg, var(--danger), var(--danger-dark));
+    color: #fff;
+}
+
+button.warning {
+    background: linear-gradient(135deg, var(--warning), var(--warning-dark));
+    color: #fff;
+}
+
+button.ghost {
+    background: transparent;
+    color: #fff;
+    border: 2px solid #4a5568;
+}
+
+button.ghost:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--primary);
+}
+
+button.small {
+    padding: 8px 12px;
+    font-size: 12px;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* حالة الصفحات */
+.page {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+}
+
+.page.active {
+    display: block;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.card {
+    background: var(--card);
+    padding: 24px;
+    border-radius: var(--radius);
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: var(--transition);
+    position: relative;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.list-item {
+    padding: 16px;
+    border-radius: var(--radius);
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: var(--transition);
+    border-left: 4px solid transparent;
+}
+
+.list-item:hover {
+    transform: translateX(-5px);
+    background: var(--card-hover);
+}
+
+.debt-item {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.05));
+    border-left-color: var(--primary);
+}
+
+.qat-item {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
+    border-left-color: var(--success);
+}
+
+/* شريط التنقل */
+.nav-container {
+    background: linear-gradient(135deg, var(--card) 0%, #1e293b 100%);
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.nav-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.nav-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 200px;
+}
+
+.nav-title i {
+    font-size: 28px;
+    color: var(--primary);
+}
+
+.nav-title-text h1 {
+    font-size: 20px;
+    margin: 0;
+}
+
+.nav-title-text p {
+    color: var(--muted);
+    margin: 0;
+    font-size: 12px;
+}
+
+.nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+#currentDateTime {
+    color: var(--muted);
+    font-size: 12px;
+    text-align: left;
+    min-width: 150px;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+}
+
+.nav-buttons button {
+    flex: 1;
+    min-width: 110px;
+    padding: 8px 12px;
+    font-size: 12px;
+}
+
+.nav-buttons button.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+/* صفحات المحتوى */
+.content-page {
+    display: none;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    animation: fadeInUp 0.5s ease-out;
+    padding-top: 80px;
+}
+
+.content-page.active {
+    display: block;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Login Page */
+#loginPage {
+    background: linear-gradient(135deg, var(--bg) 0%, #1e1b4b 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+#loginCard {
+    background: var(--card);
+    color: #fff;
+    padding: 40px;
+    border-radius: 24px;
+    width: 100%;
+    max-width: 440px;
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation: scaleIn 0.5s ease-out;
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+#loginCard input {
+    background: #2d3748;
+    border: 2px solid #4a5568;
+    color: #fff;
+    padding: 14px;
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+#loginCard button {
+    width: 100%;
+    margin-top: 12px;
+}
+
+.login-options {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.login-options button {
+    flex: 1;
+}
+
+/* Search */
+.search-container {
+    margin-bottom: 20px;
+    position: relative;
+    display: flex;
+    gap: 10px;
+}
+
+.search-container input {
+    background: #2d3748;
+    border: 2px solid #4a5568;
+    color: #fff;
+    padding: 14px 50px 14px 14px;
+    margin-bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cpath d='m21 21-4.3-4.3'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: calc(100% - 16px) center;
+}
+
+.search-container .search-btn {
+    padding: 8px 12px;
+    min-width: 80px;
+}
+
+/* Debt Status Colors */
+.debt-high {
+    color: var(--danger);
+    font-weight: bold;
+}
+
+.debt-medium {
+    color: var(--warning);
+    font-weight: bold;
+}
+
+.debt-low {
+    color: var(--success);
+    font-weight: bold;
+}
+
+.debt-paid {
+    color: var(--muted);
+    text-decoration: line-through;
+}
+
+/* Payment Section */
+.payment-section {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
+    padding: 16px;
+    border-radius: 12px;
+    margin-top: 12px;
+    border-left: 4px solid var(--success);
+}
+
+/* Summary Cards */
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.summary-card {
+    padding: 20px;
+    border-radius: var(--radius);
+    text-align: center;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: var(--transition);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.summary-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+}
+
+.summary-card h3 {
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: var(--muted);
+}
+
+.summary-card p {
+    font-size: 24px;
+    font-weight: 800;
+    margin: 0;
+}
+
+.summary-card.total {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(59, 130, 246, 0.1));
+    border-left: 4px solid var(--primary);
+}
+
+.summary-card.paid {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.1));
+    border-left: 4px solid var(--success);
+}
+
+.summary-card.remaining {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(239, 68, 68, 0.1));
+    border-left: 4px solid var(--danger);
+}
+
+/* Debt History */
+.debt-history {
+    margin-top: 24px;
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+    background: var(--card);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.history-table th, .history-table td {
+    padding: 16px;
+    text-align: right;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.history-table th {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.history-table tr:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.history-date {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+/* Date Selection */
+.date-selection {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.date-selection button {
+    flex: 0 0 auto;
+}
+
+.date-selection input {
+    flex: 1;
+    margin-bottom: 0;
+    min-width: 160px;
+}
+
+.day-selector {
+    position: relative;
+    display: inline-block;
+}
+/* في ملف style2.css، عدل كود .days-dropdown */
+
+/* استبدل كود .days-dropdown الحالي بهذا */
+.days-dropdown {
+    display: none;
+    position: absolute;
+    background: var(--card);
+    width: 140px; /* عرض أقل */
+    max-height: 190px; /* ارتفاع محدود */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    z-index: 10000;
+    border-radius: 8px;
+    padding: 4px;
+    top: calc(100% + 3px); /* مسافة أقل من الزر */
+    right: 0;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    overflow-y: auto; /* إضافة scroll */
+    scrollbar-width: thin;
+    text-align: right;
+}
+
+.days-dropdown button {
+    display: block;
+    width: 100%;
+    text-align: right;
+    background: transparent;
+    border: none;
+    color: white;
+    padding: 7px 10px; /* padding أقل */
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 1px 0;
+    font-size: 13px; /* خط أصغر */
+    font-family: 'Tajawal', sans-serif;
+    transition: background 0.2s;
+}
+
+.days-dropdown button:hover {
+    background: rgba(59, 130, 246, 0.15);
+}
+
+/* تحسين scrollbar */
+.days-dropdown::-webkit-scrollbar {
+    width: 3px;
+}
+
+.days-dropdown::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.1);
+}
+
+.days-dropdown::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 3px;
+}
+/* أضف هذا الكود في نهاية الملف */
+
+/* ⭐⭐⭐ الحل الرئيسي ⭐⭐⭐ */
+.days-dropdown {
+    z-index: 99999 !important; /* قيمة كبيرة جداً */
+    position: absolute !important;
+    transform: translateZ(9999px) !important; /* خدعة 3D */
+    -webkit-transform: translateZ(9999px) !important;
+}
+
+/* ⭐⭐⭐ الحل 2: العنصر الحاوي ⭐⭐⭐ */
+.date-selection,
+.card:has(.day-selector),
+.day-selector {
+    position: relative !important;
+    overflow: visible !important;
+    z-index: 10000 !important;
+}
+
+/* ⭐⭐⭐ الحل 3: تعديل تدفق العناصر ⭐⭐⭐ */
+/* جعل العناصر الأخرى خلف القائمة */
+#qatList, /* سجل القات */
+#debtsList, /* قائمة الديون */
+.card:not(:has(.day-selector)),
+.list-item {
+    position: relative;
+    z-index: 1 !important; /* قيمة منخفضة */
+}
+
+/* ⭐⭐⭐ الحل 4: خلق مساحة فوقية ⭐⭐⭐ */
+/* إذا كانت القائمة تظهر تحت العناصر */
+.day-selector.active {
+    position: relative;
+    z-index: 100000 !important;
+}
+
+.day-selector.active::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: transparent;
+    z-index: 99998;
+    pointer-events: none;
+}
+.days-dropdown button {
+    display: block;
+    width: 100%;
+    text-align: right;
+    background: none;
+    border: none;
+    color: #fff;
+    padding: 12px;
+    cursor: pointer;
+    border-radius: 8px;
+    margin-bottom: 4px;
+}
+
+.days-dropdown button:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.day-selector.active .days-dropdown {
+    display: block;
+    animation: fadeInUp 0.2s ease-out;
+}
+
+/* Sync Status */
+.sync-status {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: var(--card);
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 1000;
+    transition: var(--transition);
+}
+
+.sync-status.online {
+    color: var(--success);
+    border-left: 4px solid var(--success);
+}
+
+.sync-status.offline {
+    color: var(--danger);
+    border-left: 4px solid var(--danger);
+}
+
+.sync-status.syncing {
+    color: var(--warning);
+    border-left: 4px solid var(--warning);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* Export Buttons */
+.export-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.export-buttons button {
+    flex: 1;
+    min-width: 140px;
+}
+
+/* Management Buttons */
+.management-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.management-buttons button {
+    flex: 1;
+    min-width: 140px;
+}
+
+/* Progress Bar */
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+    margin: 8px 0;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--success), var(--primary));
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+/* Loading States */
+.loading {
+    opacity: 0.7;
+    pointer-events: none;
+    position: relative;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid transparent;
+    border-top: 2px solid var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Toast Notifications */
+.toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--success);
+    color: white;
+    padding: 16px 24px;
+    border-radius: 12px;
+    z-index: 10000;
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: slideDown 0.3s ease-out;
+    border-left: 4px solid rgba(255,255,255,0.3);
+}
+
+.toast.error {
+    background: var(--danger);
+}
+
+.toast.warning {
+    background: var(--warning);
+}
+
+.toast.info {
+    background: var(--info);
+}
+
+@keyframes slideDown {
+    from { top: -100px; opacity: 0; }
+    to { top: 20px; opacity: 1; }
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+}
+
+.stat-item {
+    background: var(--card);
+    padding: 16px;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-value {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 4px;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+/* Quick Actions */
+.quick-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.quick-action-btn {
+    background: var(--card);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.quick-action-btn:hover {
+    background: var(--card-hover);
+    transform: translateY(-2px);
+    border-color: var(--primary);
+}
+
+.quick-action-btn i {
+    font-size: 24px;
+    margin-bottom: 8px;
+    color: var(--primary);
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 20px;
+}
+
+.modal-content {
+    background: var(--card);
+    padding: 32px;
+    border-radius: 24px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation: scaleIn 0.3s ease-out;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .content-page {
+        padding: 16px;
+        padding-top: 100px;
+    }
+    
+    .nav-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+    
+    .nav-title {
+        min-width: auto;
+    }
+    
+    .nav-controls {
+        justify-content: space-between;
+    }
+    
+    .nav-buttons {
+        flex-direction: row;
+        overflow-x: auto;
+        padding-bottom: 5px;
+    }
+    
+    .nav-buttons button {
+        min-width: 100px;
+        flex: none;
+    }
+    
+    #currentDateTime {
+        min-width: auto;
+        font-size: 11px;
+    }
+    
+    .summary-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .export-buttons, .management-buttons {
+        flex-direction: column;
+    }
+    
+    .date-selection {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .date-selection input {
+        min-width: auto;
+    }
+    
+    .history-table {
+        font-size: 12px;
+    }
+    
+    .history-table th, .history-table td {
+        padding: 12px 8px;
+    }
+    
+    .search-container {
+        flex-direction: column;
+    }
+    
+    .search-container input {
+        width: 100%;
+    }
+    
+    .search-container .search-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .card {
+        padding: 16px;
+    }
+    
+    #loginCard {
+        padding: 24px;
+        margin: 16px;
+    }
+    
+    .summary-card {
+        padding: 16px;
+        min-height: 80px;
+    }
+    
+    .summary-card p {
+        font-size: 20px;
+    }
+    
+    .nav-container {
+        padding: 10px 15px;
+    }
+    
+    .nav-title-text h1 {
+        font-size: 16px;
+    }
+    
+    .nav-buttons button {
+        min-width: 80px;
+        font-size: 11px;
+        padding: 6px 8px;
+    }
+    
+    .content-page {
+        padding-top: 90px;
+    }
+    
+    .modal-content {
+        padding: 20px;
+        margin: 10px;
+    }
+}
+
+/* Enhanced Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--card);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-dark);
+}
+
+/* نظام العرض الهجين */
+.table-container {
+    overflow-x: auto;
+    border-radius: var(--radius);
+    margin-bottom: 20px;
+}
+
+.view-toggle-container {
+    display: flex;
+    background: var(--card-hover);
+    padding: 4px;
+    border-radius: 12px;
+    gap: 2px;
+    margin-bottom: 20px;
+}
+
+.view-toggle-container button {
+    flex: 1;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 12px;
+}
+
+.view-toggle-container button.active {
+    background: var(--primary);
+    color: white;
+}
+
+.view-toggle-container button:not(.active) {
+    background: transparent;
+    color: var(--muted);
+}
+
+.view-toggle-container button:hover:not(.active) {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* تحسينات للأداء */
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+button:disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+button:disabled::before {
+    display: none;
+}
+
+/* تحسينات للتفاعل */
+button:active {
+    transform: scale(0.98);
+}
+
+input:focus, select:focus, button:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* تحسينات للعرض على الجوال */
+@media (max-width: 768px) {
+    .table-container {
+        font-size: 12px;
+    }
+    
+    .view-toggle-container button {
+        padding: 6px 10px;
+        font-size: 11px;
+    }
+}
+
+/* Nav compact mode */
+.nav-container.compact {
+    padding: 10px 15px;
+}
+
+.nav-container.compact .nav-title-text h1 {
+    font-size: 16px;
+}
+
+.nav-container.compact .nav-buttons button {
+    padding: 6px 8px;
+    font-size: 11px;
+    min-width: 70px;
+}
+/* إضافة scroll سلس */
+.days-dropdown {
+    scrollbar-width: thin; /* لـ Firefox */
+    scrollbar-color: var(--primary) rgba(255,255,255,0.1);
+    
+    /* تأثير scroll ناعم */
+    scroll-behavior: smooth;
+    
+    /* جعل القائمة أكثر إحكاما */
+    line-height: 1.3;
+}
+
+/* تحسين عرض القائمة على الشاشات الصغيرة */
+@media (max-width: 768px) {
+    .days-dropdown {
+        max-height: 220px !important; /* أقل ارتفاع للهواتف */
+        min-width: 130px !important;
+        padding: 4px !important;
+    }
+    
+    .days-dropdown button {
+        padding: 7px 10px !important;
+        font-size: 12px !important;
+    }
+}
+/* مؤشر أن هناك المزيد للتمرير */
+.days-dropdown::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: linear-gradient(to bottom, transparent, var(--card));
+    pointer-events: none;
+    border-radius: 0 0 10px 10px;
+}
+
+/* عندما تكون القائمة مفتوحة */
+.day-selector.active .days-dropdown {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3), 
+                0 0 0 1px var(--primary); /* إضافة حدود خفيفة */
+}
