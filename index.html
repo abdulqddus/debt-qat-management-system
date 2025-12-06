@@ -32,8 +32,7 @@
     <meta name="apple-mobile-web-app-title" content="محفظة الديون">
     <meta name="application-name" content="محفظة الديون">
     <link rel="icon" type="image/png" href="https://i.ibb.co/PZDXdwtt/wallet-icon.png">
-    <link rel="apple-touch-icon" href="https://api.microlink.io/?url=https://i.ibb.co/PZDXdwtt/wallet-icon.png&embed=image&width=180&height=180">
-    <link rel="apple-touch-startup-image" href="https://i.ibb.co/PZDXdwtt/wallet-icon.png">
+    <link rel="apple-touch-icon" href="https://i.ibb.co/PZDXdwtt/wallet-icon.png">
 
     <!-- شاشة التحميل -->
     <style>
@@ -193,7 +192,6 @@
 
     <!-- صفحات المحتوى -->
     <div id="dashboardPage" class="content-page active">
-        <!-- محتوى لوحة التحكم (كما هو) -->
         <div class="card">
             <h2><i class="fas fa-tachometer-alt"></i> لوحة التحكم الرئيسية</h2>
             <p style="color: var(--muted); margin-bottom: 24px;">نظرة شاملة على أداء أعمالك</p>
@@ -250,7 +248,6 @@
 
     <!-- صفحة الديون -->
     <div id="debtsPage" class="content-page">
-        <!-- محتوى الديون (كما هو) -->
         <div class="search-container">
             <input type="text" id="searchDebts" placeholder="🔍 ابحث بالاسم أو التاريخ... ثم اضغط Enter للسجل التفصيلي" />
             <button id="quickSearchBtn" class="small primary search-btn">
@@ -375,7 +372,6 @@
 
     <!-- صفحة القات -->
     <div id="qatPage" class="content-page">
-        <!-- محتوى القات (كما هو) -->
         <div class="search-container">
             <input type="text" id="searchQat" placeholder="🔍 ابحث في القات..." />
             <button id="searchQatBtn" class="small primary search-btn">
@@ -428,7 +424,6 @@
 
     <!-- صفحة الملخص -->
     <div id="summaryPage" class="content-page">
-        <!-- محتوى الملخص (كما هو) -->
         <div class="card">
             <h3><i class="fas fa-chart-pie"></i> ملخص الديون التفصيلي</h3>
             <div class="export-buttons">
@@ -467,132 +462,135 @@
                     <i class="fas fa-upload"></i>
                     استعادة البيانات
                 </button>
-        <!-- صفحة الإعدادات (في قسم management-buttons) -->
-<div class="management-buttons">
-    <button id="changePassword" class="warning">
-        <i class="fas fa-key"></i>
-        تغيير كلمة المرور
-    </button>
-    <button id="deleteData" class="danger">
-        <i class="fas fa-trash"></i>
-        حذف جميع البيانات
-    </button>
-    <button id="exportAllData" class="primary">
-        <i class="fas fa-download"></i>
-        نسخ احتياطي
-    </button>
-    <button id="importData" class="success">
-        <i class="fas fa-upload"></i>
-        استعادة البيانات
-    </button>
-    
-    <!-- الأزرار المصححة: -->
-    <button id="aboutApp" class="info" onclick="showAboutPage()">
-        <i class="fas fa-info-circle"></i>
-        حول التطبيق
-    </button>
-    <button id="helpCenter" class="ghost" onclick="showHelpPage()">
-        <i class="fas fa-question-circle"></i>
-        مركز المساعدة
-    </button>
-</div>
+                <button id="aboutApp" class="info" onclick="showAboutPage()">
+                    <i class="fas fa-info-circle"></i>
+                    حول التطبيق
+                </button>
+                <button id="helpCenter" class="ghost" onclick="showHelpPage()">
+                    <i class="fas fa-question-circle"></i>
+                    مركز المساعدة
+                </button>
+            </div>
+        </div>
 
-<!-- صفحة حول التطبيق -->
-<div id="aboutPage" class="content-page">
-    <div class="card">
-        <h2><i class="fas fa-info-circle"></i> حول التطبيق</h2>
-        
-        <div class="about-section">
-            <img src="https://i.ibb.co/PZDXdwtt/wallet-icon.png" 
-                 alt="أيقونة التطبيق" 
-                 style="width: 100px; height: 100px; margin: 20px auto; display: block;">
+        <div class="card">
+            <h3><i class="fas fa-chart-bar"></i> إحصائيات النظام</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value" id="statsTotalDebts">0</div>
+                    <div class="stat-label">إجمالي الديون</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="statsTotalRecords">0</div>
+                    <div class="stat-label">إجمالي السجلات</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="statsActiveDebts">0</div>
+                    <div class="stat-label">الديون النشطة</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="statsQatRecords">0</div>
+                    <div class="stat-label">سجلات القات</div>
+                </div>
+            </div>
+            <div id="backupStatus" style="font-size: 10px; color: var(--muted); margin-top: 5px; text-align: center;"></div>
+        </div>
+    </div>
+
+    <!-- صفحة حول التطبيق -->
+    <div id="aboutPage" class="content-page">
+        <div class="card">
+            <h2><i class="fas fa-info-circle"></i> حول التطبيق</h2>
             
-            <h3>محفظة الديون الذكية</h3>
-            <p>الإصدار: 2.0.0</p>
-            <p>تاريخ الإصدار: 2025</p>
-        </div>
-        
-        <div class="about-section">
-            <h4><i class="fas fa-code"></i> المميزات</h4>
-            <ul>
-                <li>إدارة الديون المتعددة</li>
-                <li>تتبع مدفوعات القات</li>
-                <li>عمل بدون إنترنت</li>
-                <li>تصدير التقارير</li>
-                <li>نسخ احتياطي</li>
-            </ul>
-        </div>
-        
-        <div class="about-section">
-            <h4><i class="fas fa-user"></i> المطور</h4>
-            <p>عبدالقدوس الشيباني</p>
-            <p>نظام إدارة متكامل للأعمال الصغيرة</p>
-        </div>
-        
-        <div class="contact-section">
-            <h4><i class="fas fa-envelope"></i> اتصل بنا</h4>
-            <!-- زر مصحح: -->
-            <button class="success" onclick="window.contactDeveloper()" style="width:100%; margin-top:10px;">
-                <i class="fas fa-paper-plane"></i> مراسلة المطور
+            <div class="about-section">
+                <img src="https://i.ibb.co/PZDXdwtt/wallet-icon.png" 
+                     alt="أيقونة التطبيق" 
+                     style="width: 100px; height: 100px; margin: 20px auto; display: block;">
+                
+                <h3>محفظة الديون الذكية</h3>
+                <p>الإصدار: 2.0.0</p>
+                <p>تاريخ الإصدار: 2025</p>
+            </div>
+            
+            <div class="about-section">
+                <h4><i class="fas fa-code"></i> المميزات</h4>
+                <ul>
+                    <li>إدارة الديون المتعددة</li>
+                    <li>تتبع مدفوعات القات</li>
+                    <li>عمل بدون إنترنت</li>
+                    <li>تصدير التقارير</li>
+                    <li>نسخ احتياطي</li>
+                </ul>
+            </div>
+            
+            <div class="about-section">
+                <h4><i class="fas fa-user"></i> المطور</h4>
+                <p>عبدالقدوس الشيباني</p>
+                <p>نظام إدارة متكامل للأعمال الصغيرة</p>
+            </div>
+            
+            <div class="contact-section">
+                <h4><i class="fas fa-envelope"></i> اتصل بنا</h4>
+                <button class="success" onclick="contactDeveloper()" style="width:100%; margin-top:10px;">
+                    <i class="fas fa-paper-plane"></i> مراسلة المطور
+                </button>
+            </div>
+            
+            <button class="primary" onclick="goBackToSettings()" style="width:100%; margin-top:20px;">
+                <i class="fas fa-arrow-left"></i> العودة للإعدادات
             </button>
         </div>
-        
-        <!-- زر مصحح: -->
-        <button class="primary" onclick="window.goBackToSettings()" style="width:100%; margin-top:20px;">
-            <i class="fas fa-arrow-left"></i> العودة للإعدادات
-        </button>
     </div>
-</div>
 
-<!-- صفحة المساعدة -->
-<div id="helpPage" class="content-page">
-    <div class="card">
-        <h2><i class="fas fa-question-circle"></i> مركز المساعدة</h2>
-        
-        <div class="faq-section">
-            <h3>❓ الأسئلة الشائعة</h3>
+    <!-- صفحة المساعدة -->
+    <div id="helpPage" class="content-page">
+        <div class="card">
+            <h2><i class="fas fa-question-circle"></i> مركز المساعدة</h2>
             
-            <div class="faq-item">
-                <button class="faq-question">كيف أضيف دين جديد؟</button>
-                <div class="faq-answer">
-                    <p>1. انتقل إلى صفحة "الديون"</p>
-                    <p>2. املأ اسم المتدين والمبلغ</p>
-                    <p>3. اضغط "حفظ الدين"</p>
+            <div class="faq-section">
+                <h3>❓ الأسئلة الشائعة</h3>
+                
+                <div class="faq-item">
+                    <button class="faq-question">كيف أضيف دين جديد؟</button>
+                    <div class="faq-answer">
+                        <p>1. انتقل إلى صفحة "الديون"</p>
+                        <p>2. املأ اسم المتدين والمبلغ</p>
+                        <p>3. اضغط "حفظ الدين"</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">كيفة عمل نسخة احتياطية؟</button>
+                    <div class="faq-answer">
+                        <p>1. انتقل إلى "الإعدادات"</p>
+                        <p>2. اضغط "نسخ احتياطي"</p>
+                        <p>3. سيتم حفظ ملف على هاتفك</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">كيف يعمل وضع عدم الاتصال؟</button>
+                    <div class="faq-answer">
+                        <p>1. التطبيق يحفظ البيانات تلقائياً</p>
+                        <p>2. عند عدم الاتصال، تظهر البيانات المخزنة</p>
+                        <p>3. عند العودة للاتصال، تتم المزامنة</p>
+                    </div>
                 </div>
             </div>
             
-            <div class="faq-item">
-                <button class="faq-question">كيفة عمل نسخة احتياطية؟</button>
-                <div class="faq-answer">
-                    <p>1. انتقل إلى "الإعدادات"</p>
-                    <p>2. اضغط "نسخ احتياطي"</p>
-                    <p>3. سيتم حفظ ملف على هاتفك</p>
-                </div>
+            <div class="contact-section">
+                <h3>📞 لم تجد إجابتك؟</h3>
+                <button class="success" onclick="contactSupport()" style="width:100%; margin-top:10px;">
+                    <i class="fas fa-headset"></i> اتصل بالدعم الفني
+                </button>
             </div>
 
-            <div class="faq-item">
-                <button class="faq-question">كيف يعمل وضع عدم الاتصال؟</button>
-                <div class="faq-answer">
-                    <p>1. التطبيق يحفظ البيانات تلقائياً</p>
-                    <p>2. عند عدم الاتصال، تظهر البيانات المخزنة</p>
-                    <p>3. عند العودة للاتصال، تتم المزامنة</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="contact-section">
-            <h3>📞 لم تجد إجابتك؟</h3>
-            <!-- زر مصحح: -->
-            <button class="success" onclick="window.contactSupport()" style="width:100%; margin-top:10px;">
-                <i class="fas fa-headset"></i> اتصل بالدعم الفني
+            <button class="primary" onclick="goBackToSettings()" style="width:100%; margin-top:20px;">
+                <i class="fas fa-arrow-left"></i> العودة للإعدادات
             </button>
         </div>
-
-        <!-- زر مصحح: -->
-        <button class="primary" onclick="window.goBackToSettings()" style="width:100%; margin-top:20px;">
-            <i class="fas fa-arrow-left"></i> العودة للإعدادات
-        </button>
     </div>
+
 </div>
 
 <!-- رسالة عدم الاتصال -->
@@ -719,6 +717,203 @@ window.addEventListener('load', function() {
   }, 1500);
 });
 </script>
+
+<!-- حل طارئ للأزرار (يعمل 100%) -->
+<script>
+// تأكد من تحميل الصفحة أولاً
+setTimeout(function() {
+    console.log('🚀 بدء تفعيل الأزرار...');
+    
+    // 1. دالة عرض صفحة حول
+    window.showAboutPage = function() {
+        console.log('📱 فتح صفحة حول التطبيق');
+        // إخفاء جميع الصفحات
+        document.querySelectorAll('.content-page').forEach(page => {
+            page.classList.remove('active');
+        });
+        // إظهار صفحة حول
+        document.getElementById('aboutPage').classList.add('active');
+        // تحديث أزرار التنقل
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+    };
+    
+    // 2. دالة عرض صفحة المساعدة
+    window.showHelpPage = function() {
+        console.log('📱 فتح صفحة المساعدة');
+        // إخفاء جميع الصفحات
+        document.querySelectorAll('.content-page').forEach(page => {
+            page.classList.remove('active');
+        });
+        // إظهار صفحة المساعدة
+        document.getElementById('helpPage').classList.add('active');
+        // تحديث أزرار التنقل
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+    };
+    
+    // 3. دالة الاتصال بالمطور (واتساب)
+    window.contactDeveloper = function() {
+        console.log('📞 الاتصال بالمطور على واتساب');
+        const phone = '966778942829';
+        const message = 'مرحباً، أود الاستفسار عن تطبيق محفظة الديون الذكية';
+        const url = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(message);
+        window.open(url, '_blank');
+        alert('يتم فتح واتساب للرقم: ' + phone);
+    };
+    
+    // 4. دالة الاتصال بالدعم (واتساب)
+    window.contactSupport = function() {
+        console.log('📞 الاتصال بالدعم الفني');
+        const phone = '966778942829';
+        const message = 'مرحباً، أحتاج دعم فني لتطبيق محفظة الديون';
+        const url = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(message);
+        window.open(url, '_blank');
+        alert('يتم فتح واتساب للدعم الفني');
+    };
+    
+    // 5. دالة العودة للإعدادات
+    window.goBackToSettings = function() {
+        console.log('🔙 العودة إلى الإعدادات');
+        // إخفاء جميع الصفحات
+        document.querySelectorAll('.content-page').forEach(page => {
+            page.classList.remove('active');
+        });
+        // إظهار صفحة الإعدادات
+        document.getElementById('settingsPage').classList.add('active');
+        // تحديث أزرار التنقل
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.getAttribute('data-page') === 'settingsPage') {
+                btn.classList.add('active');
+                            }
+        });
+    };
+    
+    // 6. دالة عرض الصفحة العامة
+    window.showPage = function(pageId) {
+        console.log('📄 عرض الصفحة:', pageId);
+        // إخفاء جميع الصفحات
+        document.querySelectorAll('.content-page').forEach(page => {
+            page.classList.remove('active');
+        });
+        // إظهار الصفحة المطلوبة
+        const pageElement = document.getElementById(pageId);
+        if (pageElement) {
+            pageElement.classList.add('active');
+        }
+        // تحديث أزرار التنقل
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.getAttribute('data-page') === pageId) {
+                btn.classList.add('active');
+            }
+        });
+    };
+    
+    // 7. إضافة الأحداث لأزرار التنقل
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const pageId = this.getAttribute('data-page');
+            window.showPage(pageId);
+        });
+    });
+    
+    // 8. تفعيل أزرار الأسئلة الشائعة
+    setTimeout(function() {
+        document.querySelectorAll('.faq-question').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const answer = this.nextElementSibling;
+                const isVisible = answer.style.display === 'block';
+                
+                // إغلاق جميع الإجابات
+                document.querySelectorAll('.faq-answer').forEach(ans => {
+                    ans.style.display = 'none';
+                });
+                
+                // إظهار/إخفاء الإجابة الحالية
+                answer.style.display = isVisible ? 'none' : 'block';
+                
+                // تغيير الأيقونة
+                this.classList.toggle('active', !isVisible);
+            });
+        });
+    }, 1000);
+    
+    // 9. نظام العمل بدون إنترنت
+    window.OFFLINE_MODE = {
+        isActive: !navigator.onLine,
+        
+        init() {
+            console.log('🔋 نظام عدم الاتصال:', this.isActive ? 'نشط' : 'غير نشط');
+            
+            // مراقبة حالة الاتصال
+            window.addEventListener('online', () => {
+                document.getElementById('offlineMessage').classList.add('hidden');
+                this.showMessage('✅ تم استعادة الاتصال بالإنترنت');
+            });
+            
+            window.addEventListener('offline', () => {
+                document.getElementById('offlineMessage').classList.remove('hidden');
+                this.showMessage('⚡ أنت الآن في وضع عدم الاتصال');
+            });
+            
+            // إذا كان غير متصل، عرض الرسالة
+            if (this.isActive) {
+                document.getElementById('offlineMessage').classList.remove('hidden');
+            }
+        },
+        
+        showMessage(text) {
+            // عرض رسالة مؤقتة
+            const toast = document.createElement('div');
+            toast.className = 'toast info';
+            toast.innerHTML = text;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => toast.remove(), 3000);
+        }
+    };
+    
+    // بدء نظام عدم الاتصال
+    setTimeout(() => window.OFFLINE_MODE.init(), 500);
+    
+    // 10. تحديث التاريخ والوقت
+    function updateDateTime() {
+        const now = new Date();
+        const options = { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+        };
+        
+        try {
+            const dateTimeString = now.toLocaleDateString('ar-SA', options);
+            const currentDateTimeEl = document.getElementById('currentDateTime');
+            if (currentDateTimeEl) {
+                currentDateTimeEl.textContent = dateTimeString;
+            }
+        } catch (error) {
+            console.error('خطأ في تحديث التاريخ:', error);
+        }
+    }
+    
+    // تحديث التاريخ كل دقيقة
+    updateDateTime();
+    setInterval(updateDateTime, 60000);
+    
+    console.log('✅ جميع الأزرار مفعلة وجاهزة للعمل');
+}, 500);
+</script>
+
+<!-- تحميل الملف الرئيسي JavaScript -->
 <script src="script1.js"></script>
+
 </body>
 </html>
