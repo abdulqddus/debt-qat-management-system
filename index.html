@@ -2,9 +2,9 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-    <meta name="description" content="نظام إدارة الديون والقات المتقدم - نظام ذكي لإدارة الأعمال والديون" />
-    <title>🚀 نظام إدارة الديون والقات المتقدم</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1.0,user-scalable=no" />
+    <meta name="description" content="محفظة الديون الذكية - نظام متكامل لإدارة الديون والقات" />
+    <title>محفظة الديون الذكية</title>
     
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -24,9 +24,62 @@
     <!-- CSS -->
     <link rel="stylesheet" href="style2.css">
 
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="محفظة الديون">
+    <meta name="application-name" content="محفظة الديون">
+    <link rel="icon" type="image/png" href="https://i.ibb.co/PZDXdwtt/wallet-icon.png">
+    <link rel="apple-touch-icon" href="https://api.microlink.io/?url=https://i.ibb.co/PZDXdwtt/wallet-icon.png&embed=image&width=180&height=180">
+    <link rel="apple-touch-startup-image" href="https://i.ibb.co/PZDXdwtt/wallet-icon.png">
+
+    <!-- شاشة التحميل -->
+    <style>
+      #splash-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: opacity 0.5s;
+      }
+      
+      .splash-logo {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 20px;
+        animation: pulse 2s infinite;
+      }
+      
+      .splash-text {
+        color: white;
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      
+      .splash-subtext {
+        color: #94a3b8;
+        font-size: 16px;
+      }
+      
+      @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+      }
+    </style>
+
     <!-- تعريف متغيرات Firebase في البيئة -->
     <script>
-        // هذه القيم يجب أن تكون في ملف .env في الإنتاج
         window.FIREBASE_CONFIG = {
             apiKey: "AIzaSyB1KgAYSe--Vq0ninrIaMDSh34llRJfW9Y",
             authDomain: "qat-debt-management-system.firebaseapp.com",
@@ -37,37 +90,23 @@
             appId: "1:827162170021:web:ba352c809d7a4fc5b1f34c"
         };
     </script>
-        <!-- PWA Manifest -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#3b82f6">
-
-<!-- PWA iOS Support -->
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="محفظة الديون">
-<link rel="apple-touch-icon" href="https://api.microlink.io/?url=https://i.ibb.co/PZDXdwtt/wallet-icon.png&embed=image&width=180&height=180">
-<!-- ⭐ الكود الجديد مع أيقونة المحفظة ⭐ -->
-<!-- Favicon للمتصفح -->
-<link rel="icon" type="image/png" href="https://i.ibb.co/PZDXdwtt/wallet-icon.png">
-
-<!-- صورة بدء التشغيل لأجهزة Apple -->
-<link rel="apple-touch-startup-image" href="https://i.ibb.co/PZDXdwtt/wallet-icon.png">
-
-<!-- إعدادات PWA محسنة -->
-<meta name="application-name" content="محفظة الديون">
-
-<!-- منع التكبير لجعل التطبيق يبدو أصلياً -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 </head>
 <body>
+
+<!-- شاشة التحميل -->
+<div id="splash-screen">
+  <img src="https://i.ibb.co/PZDXdwtt/wallet-icon.png" alt="محفظة الديون" class="splash-logo">
+  <div class="splash-text">محفظة الديون الذكية</div>
+  <div class="splash-subtext">جارِ التحميل...</div>
+</div>
 
 <!-- صفحة تسجيل الدخول -->
 <div id="loginPage" class="page active">
     <div id="loginCard">
         <div style="margin-bottom: 24px;">
-            <i class="fas fa-chart-line" style="font-size: 48px; color: var(--primary); margin-bottom: 16px;"></i>
-            <h2>🚀 نظام إدارة الديون والقات المتقدم</h2>
-            <p style="color: var(--muted); margin-top: 8px;">إدارة ذكية وسريعة لديونك وأعمالك</p>
+            <img src="https://i.ibb.co/PZDXdwtt/wallet-icon.png" alt="أيقونة المحفظة" style="width: 80px; height: 80px; margin-bottom: 16px;">
+            <h2>محفظة الديون الذكية</h2>
+            <p style="color: var(--muted); margin-top: 8px;">نظام متكامل لإدارة الديون والقات</p>
         </div>
         
         <input id="loginName" type="text" placeholder="👤 اسم المستخدم" />
@@ -112,9 +151,9 @@
     <div class="nav-container" id="navContainer">
         <div class="nav-header">
             <div class="nav-title">
-                <i class="fas fa-chart-line"></i>
+                <img src="https://i.ibb.co/PZDXdwtt/wallet-icon.png" alt="أيقونة" style="width: 32px; height: 32px; margin-left: 10px;">
                 <div class="nav-title-text">
-                    <h1>نظام إدارة الديون والقات</h1>
+                    <h1>محفظة الديون الذكية</h1>
                     <p id="welcomeText">مرحباً بك</p>
                 </div>
             </div>
@@ -131,7 +170,7 @@
         <div class="nav-buttons">
             <button id="navDashboard" class="warning nav-btn active" data-page="dashboardPage">
                 <i class="fas fa-tachometer-alt"></i>
-                لوحة التحكم
+                الرئيسية
             </button>
             <button id="navDebts" class="primary nav-btn" data-page="debtsPage">
                 <i class="fas fa-hand-holding-usd"></i>
@@ -143,7 +182,7 @@
             </button>
             <button id="navSummary" class="info nav-btn" data-page="summaryPage">
                 <i class="fas fa-chart-pie"></i>
-                الملخص
+                التقارير
             </button>
             <button id="navSettings" class="ghost nav-btn" data-page="settingsPage">
                 <i class="fas fa-cog"></i>
@@ -154,6 +193,7 @@
 
     <!-- صفحات المحتوى -->
     <div id="dashboardPage" class="content-page active">
+        <!-- محتوى لوحة التحكم (كما هو) -->
         <div class="card">
             <h2><i class="fas fa-tachometer-alt"></i> لوحة التحكم الرئيسية</h2>
             <p style="color: var(--muted); margin-bottom: 24px;">نظرة شاملة على أداء أعمالك</p>
@@ -210,6 +250,7 @@
 
     <!-- صفحة الديون -->
     <div id="debtsPage" class="content-page">
+        <!-- محتوى الديون (كما هو) -->
         <div class="search-container">
             <input type="text" id="searchDebts" placeholder="🔍 ابحث بالاسم أو التاريخ... ثم اضغط Enter للسجل التفصيلي" />
             <button id="quickSearchBtn" class="small primary search-btn">
@@ -334,6 +375,7 @@
 
     <!-- صفحة القات -->
     <div id="qatPage" class="content-page">
+        <!-- محتوى القات (كما هو) -->
         <div class="search-container">
             <input type="text" id="searchQat" placeholder="🔍 ابحث في القات..." />
             <button id="searchQatBtn" class="small primary search-btn">
@@ -386,6 +428,7 @@
 
     <!-- صفحة الملخص -->
     <div id="summaryPage" class="content-page">
+        <!-- محتوى الملخص (كما هو) -->
         <div class="card">
             <h3><i class="fas fa-chart-pie"></i> ملخص الديون التفصيلي</h3>
             <div class="export-buttons">
@@ -424,6 +467,14 @@
                     <i class="fas fa-upload"></i>
                     استعادة البيانات
                 </button>
+                <button id="aboutApp" class="info" onclick="showPage('aboutPage')">
+                    <i class="fas fa-info-circle"></i>
+                    حول التطبيق
+                </button>
+                <button id="helpCenter" class="ghost" onclick="showPage('helpPage')">
+                    <i class="fas fa-question-circle"></i>
+                    مركز المساعدة
+                </button>
             </div>
         </div>
 
@@ -450,6 +501,117 @@
             <div id="backupStatus" style="font-size: 10px; color: var(--muted); margin-top: 5px; text-align: center;"></div>
         </div>
     </div>
+
+    <!-- صفحة حول التطبيق -->
+    <div id="aboutPage" class="content-page">
+        <div class="card">
+            <h2><i class="fas fa-info-circle"></i> حول التطبيق</h2>
+            
+            <div class="about-section">
+                <img src="https://i.ibb.co/PZDXdwtt/wallet-icon.png" 
+                     alt="أيقونة التطبيق" 
+                     style="width: 100px; height: 100px; margin: 20px auto; display: block;">
+                
+                <h3>محفظة الديون الذكية</h3>
+                <p>الإصدار: 2.0.0</p>
+                <p>تاريخ الإصدار: 2024</p>
+            </div>
+            
+            <div class="about-section">
+                <h4><i class="fas fa-code"></i> المميزات</h4>
+                <ul>
+                    <li>إدارة الديون المتعددة</li>
+                    <li>تتبع مدفوعات القات</li>
+                    <li>عمل بدون إنترنت</li>
+                    <li>تصدير التقارير</li>
+                    <li>نسخ احتياطي</li>
+                </ul>
+            </div>
+            
+            <div class="about-section">
+                <h4><i class="fas fa-user"></i> المطور</h4>
+                <p>عبد القدوس</p>
+                <p>نظام إدارة متكامل للأعمال الصغيرة</p>
+            </div>
+            
+            <div class="contact-section">
+                <h4><i class="fas fa-envelope"></i> اتصل بنا</h4>
+                <button class="success" onclick="contactDeveloper()" style="width:100%; margin-top:10px;">
+                    <i class="fas fa-paper-plane"></i> مراسلة المطور
+                </button>
+            </div>
+            
+            <button class="primary" onclick="showPage('settingsPage')" style="width:100%; margin-top:20px;">
+                <i class="fas fa-arrow-left"></i> العودة للإعدادات
+            </button>
+        </div>
+    </div>
+
+    <!-- صفحة المساعدة -->
+    <div id="helpPage" class="content-page">
+        <div class="card">
+            <h2><i class="fas fa-question-circle"></i> مركز المساعدة</h2>
+            
+            <div class="faq-section">
+                <h3>❓ الأسئلة الشائعة</h3>
+                
+                <div class="faq-item">
+                    <button class="faq-question">كيف أضيف دين جديد؟</button>
+                    <div class="faq-answer">
+                        <p>1. انتقل إلى صفحة "الديون"</p>
+                        <p>2. املأ اسم المتدين والمبلغ</p>
+                        <p>3. اضغط "حفظ الدين"</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">كيفة عمل نسخة احتياطية؟</button>
+                    <div class="faq-answer">
+                        <p>1. انتقل إلى "الإعدادات"</p>
+                        <p>2. اضغط "نسخ احتياطي"</p>
+                        <p>3. سيتم حفظ ملف على هاتفك</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">كيف يعمل وضع عدم الاتصال؟</button>
+                    <div class="faq-answer">
+                        <p>1. التطبيق يحفظ البيانات تلقائياً</p>
+                        <p>2. عند عدم الاتصال، تظهر البيانات المخزنة</p>
+                        <p>3. عند العودة للاتصال، تتم المزامنة</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-section">
+                <h3>📞 لم تجد إجابتك؟</h3>
+                <button class="success" onclick="contactDeveloper()" style="width:100%; margin-top:10px;">
+                    <i class="fas fa-headset"></i> اتصل بالدعم الفني
+                </button>
+            </div>
+
+            <button class="primary" onclick="showPage('settingsPage')" style="width:100%; margin-top:20px;">
+                <i class="fas fa-arrow-left"></i> العودة للإعدادات
+            </button>
+        </div>
+    </div>
+
+</div>
+
+<!-- رسالة عدم الاتصال -->
+<div id="offlineMessage" class="hidden" style="
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #f59e0b;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  z-index: 10000;
+  font-weight: bold;
+">
+  ⚡ أنت في وضع عدم الاتصال. البيانات مخزنة محلياً.
 </div>
 
 <!-- حالة المزامنة -->
@@ -533,19 +695,32 @@
 </div>
 
 <!-- JavaScript -->
-<!-- Register Service Worker -->
 <script>
+// تسجيل Service Worker
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
     navigator.serviceWorker.register('sw.js')
       .then(function(registration) {
-        console.log('Service Worker registered: ', registration.scope);
+        console.log('Service Worker مسجل بنجاح');
       })
       .catch(function(error) {
-        console.log('Service Worker registration failed: ', error);
+        console.log('فشل تسجيل Service Worker:', error);
       });
   });
 }
+
+// إخفاء شاشة التحميل
+window.addEventListener('load', function() {
+  setTimeout(function() {
+    const splashScreen = document.getElementById('splash-screen');
+    if (splashScreen) {
+      splashScreen.style.opacity = '0';
+      setTimeout(() => {
+        splashScreen.style.display = 'none';
+      }, 500);
+    }
+  }, 1500);
+});
 </script>
 <script src="script1.js"></script>
 </body>
