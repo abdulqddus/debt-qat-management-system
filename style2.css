@@ -1157,3 +1157,186 @@ input:focus, select:focus, button:focus {
     box-shadow: 0 5px 15px rgba(0,0,0,0.3), 
                 0 0 0 1px var(--primary); /* إضافة حدود خفيفة */
 }
+/* ========== صفحة حول التطبيق ========== */
+.about-section {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  border-left: 4px solid var(--primary);
+}
+
+.about-section h4 {
+  margin-bottom: 10px;
+  color: var(--primary);
+}
+
+.about-section ul {
+  padding-right: 20px;
+  margin: 10px 0;
+}
+
+.about-section li {
+  margin-bottom: 8px;
+  color: var(--muted);
+  position: relative;
+  padding-right: 15px;
+}
+
+.about-section li:before {
+  content: "✓";
+  position: absolute;
+  right: 0;
+  color: var(--success);
+}
+
+.contact-section {
+  background: rgba(16, 185, 129, 0.1);
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  border-left: 4px solid var(--success);
+}
+
+.contact-section h4 {
+  color: var(--success);
+  margin-bottom: 10px;
+}
+
+/* ========== صفحة المساعدة ========== */
+.faq-section {
+  margin-bottom: 25px;
+}
+
+.faq-section h3 {
+  color: var(--info);
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.faq-item {
+  margin-bottom: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.faq-question {
+  width: 100%;
+  padding: 15px;
+  background: var(--card);
+  border: none;
+  color: white;
+  text-align: right;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.faq-question:hover {
+  background: var(--card-hover);
+}
+
+.faq-question:after {
+  content: "➕";
+  font-size: 14px;
+  transition: transform 0.3s ease;
+}
+
+.faq-question.active:after {
+  content: "➖";
+  transform: rotate(180deg);
+}
+
+.faq-answer {
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.03);
+  display: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  animation: fadeIn 0.3s ease;
+}
+
+.faq-answer p {
+  margin-bottom: 10px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.faq-answer p:last-child {
+  margin-bottom: 0;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========== رسالة عدم الاتصال ========== */
+#offlineMessage {
+  animation: slideUp 0.3s ease-out;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ========== تحسينات PWA ========== */
+@media (display-mode: standalone) {
+  body {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    overscroll-behavior: none;
+  }
+  
+  .nav-container {
+    padding-top: calc(env(safe-area-inset-top) + 10px);
+  }
+  
+  /* إخفاء شريط التمرير في PWA */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* تحسين النصوص للأجهزة المحمولة */
+  input, textarea, select, button {
+    font-size: 16px !important; /* يمنع التكبير التلقائي في iOS */
+  }
+}
+
+/* ========== تحسينات الاستجابة ========== */
+@media (max-width: 480px) {
+  .about-section, .contact-section, .faq-item {
+    margin: 10px 0;
+    padding: 12px;
+  }
+  
+  .faq-question {
+    padding: 12px;
+    font-size: 14px;
+  }
+  
+  .faq-answer {
+    padding: 12px;
+    font-size: 13px;
+  }
+}
+
+/* ========== تحسينات الزر الجديد ========== */
+#aboutApp, #helpCenter {
+  margin-top: 8px;
+  width: 100%;
+}
