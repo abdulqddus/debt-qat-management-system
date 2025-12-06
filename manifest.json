@@ -1,0 +1,72 @@
+{
+  "name": "محفظة الديون الذكية",
+  "short_name": "محفظة الديون",
+  "description": "نظام متكامل لإدارة الديون والقات",
+  "start_url": "/debt-qat-management-system/",
+  "scope": "/debt-qat-management-system/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f172a",
+  "theme_color": "#3b82f6",
+  "categories": ["finance", "business", "productivity"],
+  "lang": "ar",
+  "dir": "rtl",
+  
+  "icons": [
+    {
+      "src": "https://i.ibb.co/PZDXdwtt/wallet-icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://i.ibb.co/PZDXdwtt/wallet-icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "https://i.ibb.co/PZDXdwtt/wallet-icon.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "https://img.icons8.com/fluency/96/000000/wallet.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    }
+  ],
+  
+  "screenshots": [
+    {
+      "src": "https://via.placeholder.com/1080x1920/0f172a/ffffff?text=محفظة+الديون+الذكية",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "محفظة الديون الذكية"
+    }
+  ],
+  
+  "shortcuts": [
+    {
+      "name": "إضافة دين جديد",
+      "short_name": "دين جديد",
+      "description": "إضافة دين سريع",
+      "url": "/debt-qat-management-system/#debtsPage"
+    },
+    {
+      "name": "تسديد دفعة",
+      "short_name": "تسديد",
+      "description": "تسديد دفعة سريعة",
+      "url": "/debt-qat-management-system/#debtsPage"
+    },
+    {
+      "name": "تسجيل قات",
+      "short_name": "قات",
+      "description": "تسجيل كمية القات",
+      "url": "/debt-qat-management-system/#qatPage"
+    }
+  ],
+  
+  "prefer_related_applications": false
+}
