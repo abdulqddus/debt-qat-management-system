@@ -3905,10 +3905,10 @@
             showToast('❌ حدث خطأ في تهيئة التطبيق', 'error');
         }
     }
+// بدء التطبيق
+document.addEventListener('DOMContentLoaded', init);
 
-    // بدء التطبيق
-    document.addEventListener('DOMContentLoaded', init);
-    // ========== نظام العمل بدون إنترنت ==========
+// ========== نظام العمل بدون إنترنت ==========
 const OFFLINE_MODE = {
   isActive: !navigator.onLine,
   autoSaveInterval: null,
@@ -4031,29 +4031,55 @@ const OFFLINE_MODE = {
 // ========== دوال جديدة للتطبيق ==========
 
 // دالة الاتصال بالمطور - مع رقمك الحقيقي
-function contactDeveloper() {
-  const whatsappURL = 'https://wa.me/966778942829?text=مرحباً، أود الاستفسار عن تطبيق محفظة الديون الذكية';
-  const emailURL = 'mailto:support@debtwallet.com?subject=استفسار عن تطبيق محفظة الديون&body=اسمي: %0D%0A%0D%0Aاستفساري:';
-  
-  const userChoice = confirm('اختر طريقة التواصل:\n\n✅ موافق → واتساب (966778942829)\n❌ إلغاء → بريد إلكتروني');
-  
-  if (userChoice) {
-    // افتح واتساب
-    window.open(whatsappURL, '_blank');
-    showToast('📞 يتم فتح واتساب للرقم: 966778942829');
-  } else {
-    // افتح بريد إلكتروني
-    window.open(emailURL, '_blank');
-    showToast('📧 يتم فتح بريد إلكتروني');
+window.contactDeveloper = function() {
+  try {
+    const whatsappURL = 'https://wa.me/966778942829?text=' + encodeURIComponent('مرحباً، أود الاستفسار عن تطبيق محفظة الديون الذكية');
+    const emailURL = 'mailto:support@debtwallet.com?subject=' + encodeURIComponent('استفسار عن تطبيق محفظة الديون') + '&body=' + encodeURIComponent('اسمي:\n\nاستفساري:');
+    
+    const userChoice = confirm('اختر طريقة التواصل:\n\n✅ موافق → واتساب (778942829)\n❌ إلغاء → بريد إلكتروني');
+    
+    if (userChoice) {
+      window.open(whatsappURL, '_blank');
+      showToast('📞 يتم فتح واتساب للرقم: 778942829');
+    } else {
+      window.open(emailURL, '_blank');
+      showToast('📧 يتم فتح بريد إلكتروني');
+    }
+  } catch (error) {
+    console.error('خطأ في contactDeveloper:', error);
+    alert('عذراً، حدث خطأ. حاول مرة أخرى.');
   }
-}
+};
 
 // دالة اتصل بالدعم الفني (مباشرة لواتساب)
-function contactSupport() {
-  const whatsappURL = 'https://wa.me/966778942829?text=مرحباً، أحتاج دعم فني لتطبيق محفظة الديون الذكية';
-  window.open(whatsappURL, '_blank');
-  showToast('📞 يتم الاتصال بالدعم الفني على واتساب');
-}
+window.contactSupport = function() {
+  try {
+    const whatsappURL = 'https://wa.me/966778942829?text=' + encodeURIComponent('مرحباً، أحتاج دعم فني لتطبيق محفظة الديون الذكية');
+    window.open(whatsappURL, '_blank');
+    showToast('📞 يتم الاتصال بالدعم الفني على واتساب');
+  } catch (error) {
+    console.error('خطأ في contactSupport:', error);
+    alert('عذراً، حدث خطأ. حاول مرة أخرى.');
+  }
+};
+
+// دالة العودة للإعدادات
+window.goBackToSettings = function() {
+  try {
+    showPage('settingsPage');
+  } catch (error) {
+    console.error('خطأ في goBackToSettings:', error);
+    // محاولة بديلة
+    document.querySelectorAll('.content-page').forEach(page => page.classList.remove('active'));
+    document.getElementById('settingsPage').classList.add('active');
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+      btn.classList.remove('active');
+      if (btn.getAttribute('data-page') === 'settingsPage') {
+        btn.classList.add('active');
+      }
+    });
+  }
+};
 
 // تهيئة الأسئلة الشائعة
 function setupFAQ() {
@@ -4087,41 +4113,70 @@ function handleFAQClick() {
 }
 
 // دالة فتح صفحة حول التطبيق
-function showAboutPage() {
+window.showAboutPage = function() {
   showPage('aboutPage');
-}
-
-// دالة فتح صفحة المساعدة
-function showHelpPage() {
-  showPage('helpPage');
-  setTimeout(setupFAQ, 100); // تهيئة الأسئلة الشائعة
-}
-
-// ========== تحسين دالة showPage ==========
-const originalShowPage = window.showPage;
-window.showPage = function(pageId) {
-  // استدعاء الدالة الأصلية
-  if (originalShowPage) {
-    originalShowPage(pageId);
-  }
-  
-  // تهيئة إضافية حسب الصفحة
-  switch(pageId) {
-    case 'helpPage':
-      setTimeout(setupFAQ, 300);
-      break;
-    case 'aboutPage':
-      // يمكن إضافة تهيئة إضافية هنا
-      break;
-  }
 };
 
-// ========== التهيئة النهائية ==========
-document.addEventListener('DOMContentLoaded', function() {
-  // تشغيل نظام عدم الاتصال
-  setTimeout(() => OFFLINE_MODE.init(), 1000);
+// دالة فتح صفحة المساعدة
+window.showHelpPage = function() {
+  showPage('helpPage');
+  setTimeout(setupFAQ, 100);
+};
+
+// ========== تهيئة الأزرار بعد تحميل الصفحة ==========
+function initializeButtons() {
+  console.log('🔧 جارٍ تهيئة الأزرار...');
   
-  // إخفاء شاشة التحميل
+  // 1. زر مراسلة المطور في صفحة حول
+  const aboutBtn = document.querySelector('#aboutPage .contact-section button');
+  if (aboutBtn) {
+    console.log('✅ عُثر على زر مراسلة المطور');
+    aboutBtn.onclick = window.contactDeveloper;
+  }
+  
+  // 2. زر اتصل بالدعم في صفحة المساعدة
+  const supportBtn = document.querySelector('#helpPage .contact-section button');
+  if (supportBtn) {
+    console.log('✅ عُثر على زر اتصل بالدعم');
+    supportBtn.onclick = window.contactSupport;
+  }
+  
+  // 3. أزرار العودة للإعدادات
+  const backButtons = document.querySelectorAll('button');
+  backButtons.forEach(btn => {
+    const onclickAttr = btn.getAttribute('onclick');
+    if (onclickAttr === "showPage('settingsPage')") {
+      btn.onclick = window.goBackToSettings;
+      console.log('✅ تم تفعيل زر العودة:', btn.textContent);
+    }
+  });
+  
+  // 4. زر حول التطبيق في الإعدادات
+  const aboutAppBtn = document.getElementById('aboutApp');
+  if (aboutAppBtn) {
+    aboutAppBtn.onclick = window.showAboutPage;
+  }
+  
+  // 5. زر مركز المساعدة في الإعدادات
+  const helpCenterBtn = document.getElementById('helpCenter');
+  if (helpCenterBtn) {
+    helpCenterBtn.onclick = window.showHelpPage;
+  }
+  
+  console.log('🎯 تم تهيئة جميع الأزرار بنجاح');
+}
+
+// ========== تشغيل نظام عدم الاتصال ==========
+function startOfflineMode() {
+  setTimeout(() => {
+    if (window.OFFLINE_MODE && typeof OFFLINE_MODE.init === 'function') {
+      OFFLINE_MODE.init();
+    }
+  }, 1000);
+}
+
+// ========== إخفاء شاشة التحميل ==========
+function hideSplashScreen() {
   window.addEventListener('load', function() {
     setTimeout(function() {
       const splashScreen = document.getElementById('splash-screen');
@@ -4133,57 +4188,73 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }, 1500);
   });
-  
-  // تحديث زر الإعدادات للوصول للصفحات الجديدة
-  setTimeout(() => {
-    // إضافة الأحداث للأزرار الجديدة
-    const aboutBtn = document.getElementById('aboutApp');
-    const helpBtn = document.getElementById('helpCenter');
-    
-    if (aboutBtn) {
-      aboutBtn.onclick = () => showAboutPage();
-    }
-    
-    if (helpBtn) {
-      helpBtn.onclick = () => showHelpPage();
-    }
-  }, 2000);
-});
-
-// ========== تحسينات إضافية ==========
-
-// إضافة زر "اتصل بالدعم" في صفحة حول التطبيق
-function addContactButton() {
-  const aboutPage = document.getElementById('aboutPage');
-  if (aboutPage && !aboutPage.querySelector('.contact-button-added')) {
-    const contactBtn = document.createElement('button');
-    contactBtn.className = 'success';
-    contactBtn.innerHTML = '<i class="fas fa-headset"></i> اتصل بالدعم الفني';
-    contactBtn.onclick = contactDeveloper;
-    contactBtn.style.width = '100%';
-    contactBtn.style.marginTop = '15px';
-    
-    const contactSection = aboutPage.querySelector('.contact-section');
-    if (contactSection) {
-      contactSection.appendChild(contactBtn);
-      aboutPage.classList.add('contact-button-added');
-    }
-  }
 }
 
-// تحديث كل 5 ثوانٍ للتحقق من حالة الاتصال
-setInterval(() => {
-  if (!navigator.onLine && !OFFLINE_MODE.isActive) {
-    OFFLINE_MODE.handleOffline();
-  }
-}, 5000);
-// دالة العودة للإعدادات من أي صفحة
-function goBackToSettings() {
-  showPage('settingsPage');
+// ========== التهيئة النهائية ==========
+// استخدم init الحقيقي بدلاً من DOMContentLoaded جديد
+if (typeof init === 'function') {
+  document.addEventListener('DOMContentLoaded', function() {
+    init(); // تشغيل init الأصلية
+    
+    // تشغيل وظائفنا الجديدة
+    setTimeout(() => {
+      initializeButtons();
+      startOfflineMode();
+      hideSplashScreen();
+      
+      // تفعيل مراقبة حالة الاتصال
+      setInterval(() => {
+        if (!navigator.onLine && !OFFLINE_MODE.isActive) {
+          OFFLINE_MODE.handleOffline();
+        }
+      }, 5000);
+    }, 1000);
+  });
+} else {
+  // إذا لم تكن init موجودة
+  document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(() => {
+      initializeButtons();
+      startOfflineMode();
+      hideSplashScreen();
+      
+      // تفعيل مراقبة حالة الاتصال
+      setInterval(() => {
+        if (!navigator.onLine && !OFFLINE_MODE.isActive) {
+          OFFLINE_MODE.handleOffline();
+        }
+      }, 5000);
+    }, 1000);
+  });
 }
 
-// دالة العودة للصفحة الرئيسية
-function goToHome() {
-  showPage('dashboardPage');
+// ========== تأكد من أن الدوال متاحة عالمياً ==========
+// هذه خطوة احتياطية
+if (typeof contactDeveloper === 'undefined') {
+  window.contactDeveloper = window.contactDeveloper || function() {
+    window.open('https://wa.me/966778942829', '_blank');
+  };
 }
+
+if (typeof goBackToSettings === 'undefined') {
+  window.goBackToSettings = window.goBackToSettings || function() {
+    showPage('settingsPage');
+  };
+}
+
+if (typeof contactSupport === 'undefined') {
+  window.contactSupport = window.contactSupport || function() {
+    window.open('https://wa.me/966778942829', '_blank');
+  };
+}
+
+// تأكد من أن showPage موجودة
+if (typeof showPage === 'undefined') {
+  console.error('❌ showPage غير معرفة!');
+} else {
+  console.log('✅ showPage جاهزة:', typeof showPage);
+}
+
+// طباعة رسالة نجاح
+console.log('🚀 نظام الأزرار الجديد جاهز للعمل!');
 })();
