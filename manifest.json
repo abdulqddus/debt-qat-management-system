@@ -1,44 +1,71 @@
 {
   "name": "نظام إدارة الديون والقات",
   "short_name": "الديون",
-  "description": "نظام ذكي لإدارة الديون والقات المتقدم",
-  "start_url": ".",
+  "description": "نظام متقدم لإدارة الديون وتتبع القات",
+  "start_url": "/debt-qat-management-system/",
+  "scope": "/debt-qat-management-system/",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#0f172a",
   "theme_color": "#3b82f6",
-  "orientation": "portrait",
+  "categories": ["finance", "business", "productivity"],
   "lang": "ar",
   "dir": "rtl",
-  "icons": [
+  
+    // الأيقونات السابقة
+    "icons": [
+  {
+    "src": "https://img.icons8.com/fluency/96/000000/money-bag.png",
+    "sizes": "96x96",
+    "type": "image/png",
+    "purpose": "any"
+  },
+  {
+    "src": "https://img.icons8.com/fluency/144/000000/money-bag.png",
+    "sizes": "144x144",
+    "type": "image/png",
+    "purpose": "any"
+  },
+  {
+    "src": "https://img.icons8.com/fluency/192/000000/money-bag.png",
+    "sizes": "192x192",
+    "type": "image/png",
+    "purpose": "any maskable"
+  },
+  {
+    "src": "https://img.icons8.com/fluency/512/000000/money-bag.png",
+    "sizes": "512x512",
+    "type": "image/png",
+    "purpose": "any maskable"
+  }
+    
+  ],
+  
+  "screenshots": [
     {
-      "src": "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/icons/cash-stack.svg",
-      "sizes": "72x72",
-      "type": "image/svg+xml",
-      "purpose": "any"
-    },
-    {
-      "src": "https://img.icons8.com/color/96/000000/money-bag.png",
-      "sizes": "96x96",
+      "src": "https://via.placeholder.com/1080x1920/3b82f6/ffffff?text=نظام+الديون",
+      "sizes": "1080x1920",
       "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "https://img.icons8.com/color/144/000000/money-bag.png",
-      "sizes": "144x144",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "https://img.icons8.com/color/192/000000/money-bag.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "https://img.icons8.com/color/512/000000/money-bag.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "form_factor": "narrow"
     }
-  ]
+  ],
+  
+  "shortcuts": [
+    {
+      "name": "إضافة دين جديد",
+      "short_name": "دين جديد",
+      "description": "إضافة دين سريع",
+      "url": "/debt-qat-management-system/?action=new-debt",
+      "icons": [{ "src": "https://img.icons8.com/color/96/000000/add.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "تسديد دفعة",
+      "short_name": "تسديد",
+      "description": "تسديد دفعة سريعة",
+      "url": "/debt-qat-management-system/?action=payment",
+      "icons": [{ "src": "https://img.icons8.com/color/96/000000/money.png", "sizes": "96x96" }]
+    }
+  ],
+  
+  "prefer_related_applications": false
 }
