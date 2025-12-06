@@ -3908,5 +3908,261 @@
 
     // بدء التطبيق
     document.addEventListener('DOMContentLoaded', init);
+    // ========== نظام العمل بدون إنترنت ==========
+const OFFLINE_MODE = {
+  isActive: !navigator.onLine,
+  autoSaveInterval: null,
+  offlineMessage: null,
+  
+  init() {
+    console.log('🔋 نظام عدم الاتصال: جاهز');
     
+    // العناصر
+    this.offlineMessage = document.getElementById('offlineMessage');
+    
+    // مراقبة حالة الاتصال
+    window.addEventListener('online', () => this.handleOnline());
+    window.addEventListener('offline', () => this.handleOffline());
+    
+    // بدء الحفظ التلقائي
+    this.startAutoSave();
+    
+    // إذا كان غير متصل، تحميل البيانات
+    if (this.isActive) {
+      setTimeout(() => this.loadFromLocalStorage(), 500);
+    }
+  },
+  
+  handleOnline() {
+    this.isActive = false;
+    if (this.offlineMessage) {
+      this.offlineMessage.classList.add('hidden');
+    }
+    showToast('✅ تم استعادة الاتصال بالإنترنت', 'success');
+    
+    // محاولة المزامنة مع السحابة
+    setTimeout(() => {
+      if (currentUser && database) {
+        syncToFirebaseWithRetry();
+      }
+    }, 2000);
+  },
+  
+  handleOffline() {
+    this.isActive = true;
+    if (this.offlineMessage) {
+      this.offlineMessage.classList.remove('hidden');
+    }
+    showToast('⚡ أنت الآن في وضع عدم الاتصال', 'warning');
+  },
+  
+  startAutoSave() {
+    // إيقاف الفاصل الزمني القديم إن وجد
+    if (this.autoSaveInterval) {
+      clearInterval(this.autoSaveInterval);
+    }
+    
+    // حفظ كل 30 ثانية
+    this.autoSaveInterval = setInterval(() => {
+      if (currentUser && (debts.length > 0 || qats.length > 0)) {
+        this.saveDataLocally();
+      }
+    }, 30000);
+  },
+  
+  saveDataLocally() {
+    try {
+      const data = {
+        debts: debts,
+        qats: qats,
+        user: currentUser,
+        lastSave: new Date().toISOString(),
+        version: '2.0'
+      };
+      
+      localStorage.setItem('offline_backup', JSON.stringify(data));
+      console.log('💾 تم الحفظ المحلي:', new Date().toLocaleTimeString());
+    } catch (error) {
+      console.error('❌ خطأ في الحفظ المحلي:', error);
+    }
+  },
+  
+  loadFromLocalStorage() {
+    try {
+      const saved = localStorage.getItem('offline_backup');
+      if (saved) {
+        const data = JSON.parse(saved);
+        
+        // التحقق من صحة البيانات
+        if (data && data.debts && data.qats) {
+          debts = Array.isArray(data.debts) ? data.debts : [];
+          qats = Array.isArray(data.qats) ? data.qats : [];
+          
+          // تحديث الواجهة
+          refreshUI();
+          
+          // إظهار التاريخ
+          const time = data.lastSave ? new Date(data.lastSave).toLocaleString('ar-SA') : 'غير معروف';
+          showToast(`📂 تم تحميل البيانات المخزنة (آخر حفظ: ${time})`, 'info');
+        }
+      } else {
+        console.log('📭 لا توجد بيانات مخزنة محلياً');
+      }
+    } catch (error) {
+      console.error('❌ خطأ في تحميل البيانات المحلية:', error);
+      showToast('❌ خطأ في تحميل البيانات المخزنة', 'error');
+    }
+  },
+  
+  // دالة للتحقق مما إذا كان يمكن العمل بدون إنترنت
+  canWorkOffline() {
+    if (!this.isActive) return true;
+    
+    const saved = localStorage.getItem('offline_backup');
+    if (!saved) {
+      showToast('❌ لا توجد بيانات مخزنة للعمل بدون إنترنت', 'error');
+      return false;
+    }
+    
+    return true;
+  }
+};
+
+// ========== دوال جديدة للتطبيق ==========
+
+// دالة الاتصال بالمطور
+function contactDeveloper() {
+  const choice = confirm('اختر طريقة التواصل:\n\nموافق → البريد الإلكتروني\nإلغاء → واتساب');
+  
+  if (choice) {
+    // بريد إلكتروني
+    window.open('mailto:abdulqddus@example.com?subject=استفسار عن تطبيق محفظة الديون&body=مرحباً، أود الاستفسار عن:', '_blank');
+  } else {
+    // واتساب
+    window.open('https://wa.me/966500000000?text=مرحباً، لدي استفسار عن تطبيق محفظة الديون:', '_blank');
+  }
+}
+
+// تهيئة الأسئلة الشائعة
+function setupFAQ() {
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    // تنظيف الأحداث القديمة
+    btn.removeEventListener('click', handleFAQClick);
+    
+    // إضافة حدث جديد
+    btn.addEventListener('click', handleFAQClick);
+  });
+}
+
+function handleFAQClick() {
+  const answer = this.nextElementSibling;
+  const isVisible = answer.style.display === 'block';
+  
+  // إغلاق جميع الإجابات الأخرى
+  document.querySelectorAll('.faq-answer').forEach(ans => {
+    ans.style.display = 'none';
+  });
+  
+  document.querySelectorAll('.faq-question').forEach(q => {
+    q.classList.remove('active');
+  });
+  
+  // إظهار/إخفاء الإجابة الحالية
+  if (!isVisible) {
+    answer.style.display = 'block';
+    this.classList.add('active');
+  }
+}
+
+// دالة فتح صفحة حول التطبيق
+function showAboutPage() {
+  showPage('aboutPage');
+}
+
+// دالة فتح صفحة المساعدة
+function showHelpPage() {
+  showPage('helpPage');
+  setTimeout(setupFAQ, 100); // تهيئة الأسئلة الشائعة
+}
+
+// ========== تحسين دالة showPage ==========
+const originalShowPage = window.showPage;
+window.showPage = function(pageId) {
+  // استدعاء الدالة الأصلية
+  if (originalShowPage) {
+    originalShowPage(pageId);
+  }
+  
+  // تهيئة إضافية حسب الصفحة
+  switch(pageId) {
+    case 'helpPage':
+      setTimeout(setupFAQ, 300);
+      break;
+    case 'aboutPage':
+      // يمكن إضافة تهيئة إضافية هنا
+      break;
+  }
+};
+
+// ========== التهيئة النهائية ==========
+document.addEventListener('DOMContentLoaded', function() {
+  // تشغيل نظام عدم الاتصال
+  setTimeout(() => OFFLINE_MODE.init(), 1000);
+  
+  // إخفاء شاشة التحميل
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      const splashScreen = document.getElementById('splash-screen');
+      if (splashScreen) {
+        splashScreen.style.opacity = '0';
+        setTimeout(() => {
+          splashScreen.style.display = 'none';
+        }, 500);
+      }
+    }, 1500);
+  });
+  
+  // تحديث زر الإعدادات للوصول للصفحات الجديدة
+  setTimeout(() => {
+    // إضافة الأحداث للأزرار الجديدة
+    const aboutBtn = document.getElementById('aboutApp');
+    const helpBtn = document.getElementById('helpCenter');
+    
+    if (aboutBtn) {
+      aboutBtn.onclick = () => showAboutPage();
+    }
+    
+    if (helpBtn) {
+      helpBtn.onclick = () => showHelpPage();
+    }
+  }, 2000);
+});
+
+// ========== تحسينات إضافية ==========
+
+// إضافة زر "اتصل بالدعم" في صفحة حول التطبيق
+function addContactButton() {
+  const aboutPage = document.getElementById('aboutPage');
+  if (aboutPage && !aboutPage.querySelector('.contact-button-added')) {
+    const contactBtn = document.createElement('button');
+    contactBtn.className = 'success';
+    contactBtn.innerHTML = '<i class="fas fa-headset"></i> اتصل بالدعم الفني';
+    contactBtn.onclick = contactDeveloper;
+    contactBtn.style.width = '100%';
+    contactBtn.style.marginTop = '15px';
+    
+    const contactSection = aboutPage.querySelector('.contact-section');
+    if (contactSection) {
+      contactSection.appendChild(contactBtn);
+      aboutPage.classList.add('contact-button-added');
+    }
+  }
+}
+
+// تحديث كل 5 ثوانٍ للتحقق من حالة الاتصال
+setInterval(() => {
+  if (!navigator.onLine && !OFFLINE_MODE.isActive) {
+    OFFLINE_MODE.handleOffline();
+  }
+}, 5000);
 })();
