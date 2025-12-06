@@ -467,135 +467,132 @@
                     <i class="fas fa-upload"></i>
                     استعادة البيانات
                 </button>
-                <button id="aboutApp" class="info" onclick="goBackToSettings()">
-                    <i class="fas fa-info-circle"></i>
-                    حول التطبيق
-                </button>
-                <button id="helpCenter" class="ghost" onclick="goBackToSettings()">
-                    <i class="fas fa-question-circle"></i>
-                    مركز المساعدة
-                </button>
-            </div>
-        </div>
+        <!-- صفحة الإعدادات (في قسم management-buttons) -->
+<div class="management-buttons">
+    <button id="changePassword" class="warning">
+        <i class="fas fa-key"></i>
+        تغيير كلمة المرور
+    </button>
+    <button id="deleteData" class="danger">
+        <i class="fas fa-trash"></i>
+        حذف جميع البيانات
+    </button>
+    <button id="exportAllData" class="primary">
+        <i class="fas fa-download"></i>
+        نسخ احتياطي
+    </button>
+    <button id="importData" class="success">
+        <i class="fas fa-upload"></i>
+        استعادة البيانات
+    </button>
+    
+    <!-- الأزرار المصححة: -->
+    <button id="aboutApp" class="info" onclick="showAboutPage()">
+        <i class="fas fa-info-circle"></i>
+        حول التطبيق
+    </button>
+    <button id="helpCenter" class="ghost" onclick="showHelpPage()">
+        <i class="fas fa-question-circle"></i>
+        مركز المساعدة
+    </button>
+</div>
 
-        <div class="card">
-            <h3><i class="fas fa-chart-bar"></i> إحصائيات النظام</h3>
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-value" id="statsTotalDebts">0</div>
-                    <div class="stat-label">إجمالي الديون</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="statsTotalRecords">0</div>
-                    <div class="stat-label">إجمالي السجلات</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="statsActiveDebts">0</div>
-                    <div class="stat-label">الديون النشطة</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="statsQatRecords">0</div>
-                    <div class="stat-label">سجلات القات</div>
-                </div>
-            </div>
-            <div id="backupStatus" style="font-size: 10px; color: var(--muted); margin-top: 5px; text-align: center;"></div>
+<!-- صفحة حول التطبيق -->
+<div id="aboutPage" class="content-page">
+    <div class="card">
+        <h2><i class="fas fa-info-circle"></i> حول التطبيق</h2>
+        
+        <div class="about-section">
+            <img src="https://i.ibb.co/PZDXdwtt/wallet-icon.png" 
+                 alt="أيقونة التطبيق" 
+                 style="width: 100px; height: 100px; margin: 20px auto; display: block;">
+            
+            <h3>محفظة الديون الذكية</h3>
+            <p>الإصدار: 2.0.0</p>
+            <p>تاريخ الإصدار: 2025</p>
         </div>
-    </div>
-
-    <!-- صفحة حول التطبيق -->
-    <div id="aboutPage" class="content-page">
-        <div class="card">
-            <h2><i class="fas fa-info-circle"></i> حول التطبيق</h2>
-            
-            <div class="about-section">
-                <img src="https://i.ibb.co/PZDXdwtt/wallet-icon.png" 
-                     alt="أيقونة التطبيق" 
-                     style="width: 100px; height: 100px; margin: 20px auto; display: block;">
-                
-                <h3>محفظة الديون الذكية</h3>
-                <p>الإصدار: 2.0.0</p>
-                <p>تاريخ الإصدار: 2024</p>
-            </div>
-            
-            <div class="about-section">
-                <h4><i class="fas fa-code"></i> المميزات</h4>
-                <ul>
-                    <li>إدارة الديون المتعددة</li>
-                    <li>تتبع مدفوعات القات</li>
-                    <li>عمل بدون إنترنت</li>
-                    <li>تصدير التقارير</li>
-                    <li>نسخ احتياطي</li>
-                </ul>
-            </div>
-            
-            <div class="about-section">
-                <h4><i class="fas fa-user"></i> المطور</h4>
-                <p>عبدالقدوس الشيباني</p>
-                <p>نظام إدارة متكامل للأعمال الصغيرة</p>
-            </div>
-            
-            <div class="contact-section">
-                <h4><i class="fas fa-envelope"></i> اتصل بنا</h4>
-                <button class="success" onclick="contactDeveloper()" style="width:100%; margin-top:10px;">
-                    <i class="fas fa-paper-plane"></i> مراسلة المطور
-                </button>
-            </div>
-            
-            <button class="primary" onclick="showPage('settingsPage')" style="width:100%; margin-top:20px;">
-                <i class="fas fa-arrow-left"></i> العودة للإعدادات
+        
+        <div class="about-section">
+            <h4><i class="fas fa-code"></i> المميزات</h4>
+            <ul>
+                <li>إدارة الديون المتعددة</li>
+                <li>تتبع مدفوعات القات</li>
+                <li>عمل بدون إنترنت</li>
+                <li>تصدير التقارير</li>
+                <li>نسخ احتياطي</li>
+            </ul>
+        </div>
+        
+        <div class="about-section">
+            <h4><i class="fas fa-user"></i> المطور</h4>
+            <p>عبدالقدوس الشيباني</p>
+            <p>نظام إدارة متكامل للأعمال الصغيرة</p>
+        </div>
+        
+        <div class="contact-section">
+            <h4><i class="fas fa-envelope"></i> اتصل بنا</h4>
+            <!-- زر مصحح: -->
+            <button class="success" onclick="window.contactDeveloper()" style="width:100%; margin-top:10px;">
+                <i class="fas fa-paper-plane"></i> مراسلة المطور
             </button>
         </div>
+        
+        <!-- زر مصحح: -->
+        <button class="primary" onclick="window.goBackToSettings()" style="width:100%; margin-top:20px;">
+            <i class="fas fa-arrow-left"></i> العودة للإعدادات
+        </button>
     </div>
+</div>
 
-    <!-- صفحة المساعدة -->
-    <div id="helpPage" class="content-page">
-        <div class="card">
-            <h2><i class="fas fa-question-circle"></i> مركز المساعدة</h2>
+<!-- صفحة المساعدة -->
+<div id="helpPage" class="content-page">
+    <div class="card">
+        <h2><i class="fas fa-question-circle"></i> مركز المساعدة</h2>
+        
+        <div class="faq-section">
+            <h3>❓ الأسئلة الشائعة</h3>
             
-            <div class="faq-section">
-                <h3>❓ الأسئلة الشائعة</h3>
-                
-                <div class="faq-item">
-                    <button class="faq-question">كيف أضيف دين جديد؟</button>
-                    <div class="faq-answer">
-                        <p>1. انتقل إلى صفحة "الديون"</p>
-                        <p>2. املأ اسم المتدين والمبلغ</p>
-                        <p>3. اضغط "حفظ الدين"</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <button class="faq-question">كيفة عمل نسخة احتياطية؟</button>
-                    <div class="faq-answer">
-                        <p>1. انتقل إلى "الإعدادات"</p>
-                        <p>2. اضغط "نسخ احتياطي"</p>
-                        <p>3. سيتم حفظ ملف على هاتفك</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question">كيف يعمل وضع عدم الاتصال؟</button>
-                    <div class="faq-answer">
-                        <p>1. التطبيق يحفظ البيانات تلقائياً</p>
-                        <p>2. عند عدم الاتصال، تظهر البيانات المخزنة</p>
-                        <p>3. عند العودة للاتصال، تتم المزامنة</p>
-                    </div>
+            <div class="faq-item">
+                <button class="faq-question">كيف أضيف دين جديد؟</button>
+                <div class="faq-answer">
+                    <p>1. انتقل إلى صفحة "الديون"</p>
+                    <p>2. املأ اسم المتدين والمبلغ</p>
+                    <p>3. اضغط "حفظ الدين"</p>
                 </div>
             </div>
             
-            <div class="contact-section">
-                <h3>📞 لم تجد إجابتك؟</h3>
-                <button class="success" onclick="contactDeveloper()" style="width:100%; margin-top:10px;">
-                    <i class="fas fa-headset"></i> اتصل بالدعم الفني
-                </button>
+            <div class="faq-item">
+                <button class="faq-question">كيفة عمل نسخة احتياطية؟</button>
+                <div class="faq-answer">
+                    <p>1. انتقل إلى "الإعدادات"</p>
+                    <p>2. اضغط "نسخ احتياطي"</p>
+                    <p>3. سيتم حفظ ملف على هاتفك</p>
+                </div>
             </div>
 
-            <button class="primary" onclick="showPage('settingsPage')" style="width:100%; margin-top:20px;">
-                <i class="fas fa-arrow-left"></i> العودة للإعدادات
+            <div class="faq-item">
+                <button class="faq-question">كيف يعمل وضع عدم الاتصال؟</button>
+                <div class="faq-answer">
+                    <p>1. التطبيق يحفظ البيانات تلقائياً</p>
+                    <p>2. عند عدم الاتصال، تظهر البيانات المخزنة</p>
+                    <p>3. عند العودة للاتصال، تتم المزامنة</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="contact-section">
+            <h3>📞 لم تجد إجابتك؟</h3>
+            <!-- زر مصحح: -->
+            <button class="success" onclick="window.contactSupport()" style="width:100%; margin-top:10px;">
+                <i class="fas fa-headset"></i> اتصل بالدعم الفني
             </button>
         </div>
-    </div>
 
+        <!-- زر مصحح: -->
+        <button class="primary" onclick="window.goBackToSettings()" style="width:100%; margin-top:20px;">
+            <i class="fas fa-arrow-left"></i> العودة للإعدادات
+        </button>
+    </div>
 </div>
 
 <!-- رسالة عدم الاتصال -->
