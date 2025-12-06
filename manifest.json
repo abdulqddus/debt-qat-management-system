@@ -1,7 +1,7 @@
 {
   "name": "محفظة الديون الذكية",
   "short_name": "محفظة الديون",
-  "description": "نظام متكامل لإدارة الديون وتتبع المدفوعات",
+  "description": "نظام متكامل لإدارة الديون والقات",
   "start_url": "/debt-qat-management-system/",
   "scope": "/debt-qat-management-system/",
   "display": "standalone",
@@ -20,31 +20,26 @@
       "purpose": "any maskable"
     },
     {
-      "src": "https://api.microlink.io/?url=https://i.ibb.co/PZDXdwtt/wallet-icon.png&embed=image&width=192&height=192",
+      "src": "https://i.ibb.co/PZDXdwtt/wallet-icon.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "https://api.microlink.io/?url=https://i.ibb.co/PZDXdwtt/wallet-icon.png&embed=image&width=144&height=144",
+      "src": "https://i.ibb.co/PZDXdwtt/wallet-icon.png",
       "sizes": "144x144",
       "type": "image/png"
     },
     {
-      "src": "https://api.microlink.io/?url=https://i.ibb.co/PZDXdwtt/wallet-icon.png&embed=image&width=96&height=96",
+      "src": "https://img.icons8.com/fluency/96/000000/wallet.png",
       "sizes": "96x96",
-      "type": "image/png"
-    },
-    {
-      "src": "https://api.microlink.io/?url=https://i.ibb.co/PZDXdwtt/wallet-icon.png&embed=image&width=72&height=72",
-      "sizes": "72x72",
       "type": "image/png"
     }
   ],
   
   "screenshots": [
     {
-      "src": "https://api.microlink.io/?url=https://i.ibb.co/PZDXdwtt/wallet-icon.png&embed=image&width=1080&height=1920&fit=contain&background=%230f172a",
+      "src": "https://via.placeholder.com/1080x1920/0f172a/ffffff?text=محفظة+الديون+الذكية",
       "sizes": "1080x1920",
       "type": "image/png",
       "form_factor": "narrow",
@@ -57,8 +52,19 @@
       "name": "إضافة دين جديد",
       "short_name": "دين جديد",
       "description": "إضافة دين سريع",
-      "url": "/debt-qat-management-system/#debtsPage",
-      "icons": [{ "src": "https://api.microlink.io/?url=https://i.ibb.co/PZDXdwtt/wallet-icon.png&embed=image&width=96&height=96", "sizes": "96x96" }]
+      "url": "/debt-qat-management-system/#debtsPage"
+    },
+    {
+      "name": "تسديد دفعة",
+      "short_name": "تسديد",
+      "description": "تسديد دفعة سريعة",
+      "url": "/debt-qat-management-system/#debtsPage"
+    },
+    {
+      "name": "تسجيل قات",
+      "short_name": "قات",
+      "description": "تسجيل كمية القات",
+      "url": "/debt-qat-management-system/#qatPage"
     }
   ],
   
