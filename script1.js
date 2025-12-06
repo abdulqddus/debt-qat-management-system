@@ -4257,4 +4257,24 @@ if (typeof showPage === 'undefined') {
 
 // طباعة رسالة نجاح
 console.log('🚀 نظام الأزرار الجديد جاهز للعمل!');
+    // في نهاية script1.js قبل })();
+window.showAboutPage = function() {
+    showPage('aboutPage');
+};
+
+window.showHelpPage = function() {
+    showPage('helpPage');
+};
+
+window.contactDeveloper = function() {
+    window.open('https://wa.me/966778942829?text=مرحباً', '_blank');
+};
+
+window.contactSupport = function() {
+    window.open('https://wa.me/966778942829?text=دعم فني', '_blank');
+};
+
+window.goBackToSettings = function() {
+    showPage('settingsPage');
+};
 })();
